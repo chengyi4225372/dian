@@ -1,0 +1,12 @@
+body{background-color: #393d49;}
+.login{width: 320px;height: 340px;padding: 30px 40px;position: fixed;top: 0;right: 0;bottom: 0;left: 0;margin: auto;background-color: #fff;border-radius: 2px;}
+.login h1{color: #393d49;text-align: center;margin-bottom: 25px;font-size: 24px;}
+.login .layui-form-item{position: relative;margin-bottom: 20px;}
+.login .layui-form-item i{position: absolute;left: 1px;top: 1px;width: 44px;line-height: 42px;text-align: center;color: #ccc;font-size: 20px;}
+.login .layui-form-item .layui-input{padding-left: 44px;}
+.login .layui-form-item .layui-input-lg{height: 44px;}
+.login .layui-btn{width: 100%;}
+.login .captcha img{width: 135px;height: 42px;position: absolute;right: 1px;top: 1px;cursor: pointer;}
+.login .copyright{text-align: center;margin-top: 25px;}
+.login .copyright a{color: #ccc;}
+.login .copyright a:hover{color: #009688;}

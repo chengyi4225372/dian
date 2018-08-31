@@ -1,0 +1,38 @@
+{extend name="public:base" /}
+{block name="body"}
+<div class="layui-card">
+	<div class="layui-card-body">
+		<a href="{:url('admin/config/add_group')}" class="layui-btn"><i class="fa fa-plus-circle"></i> 添加分组</a>
+		<table class="layui-table layui-form">
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>值</th>
+					<th>排序</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach name="list" item="v" empty="$empty"}
+				<tr>
+					<td>{$v.name}</td>
+					<td>{$v.value}</td>
+					<td>
+						<input type="text" name="sort_order" value="{$v.sort_order}" class="layui-input ajax-update" data-url="{:url('admin/config/set_group_sort_order', ['id' => $v.id])}">
+					</td>
+					<td>
+						<input type="checkbox" name="status" lay-skin="switch" lay-filter="*" lay-text="启用|禁用" data-url="{:url('admin/config/set_group_status', ['id' => $v.id])}" {if $v.status eq 1}checked="checked"{/if}>
+					</td>
+					<td>
+						<a href="{:url('admin/config/edit_group', ['id' => $v.id])}" class="layui-btn layui-btn-xs layui-btn-normal"><i class="fa fa-edit"></i> 编辑</a>
+						<a href="{:url('admin/config/del_group', ['id' => $v.id])}" class="layui-btn layui-btn-xs layui-btn-danger ajax-delete"><i class="fa fa-trash-o"></i> 删除</a>
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+		<div class="page">{$list->render()}</div>
+	</div>
+</div>
+{/block}

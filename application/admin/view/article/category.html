@@ -1,0 +1,34 @@
+{extend name="public:base" /}
+{block name="body"}
+<div class="layui-card">
+	<div class="layui-card-body">
+		<a href="{:url('admin/article/add_category')}" class="layui-btn"><i class="fa fa-plus-circle"></i> 添加分类</a>
+		<table class="layui-table layui-form">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>分类名称</th>
+				<th>排序</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			{foreach name="list" item="v" empty="$empty"}
+			<tr>
+				<td>{$v.id}</td>
+				<td>{neq name="v.level" value="1"}|{php}for($i=1;$i<$v['level'];$i++){echo ' ----';}{/php}{/neq} {$v.category_name}</td>
+				<td>
+					<input type="text" name="sort_order" value="{$v.sort_order}" class="layui-input ajax-update" data-url="{:url('admin/article/set_category_sort_order', ['id' => $v.id])}">
+				</td>
+				<td>
+					<a href="{:url('admin/article/add_category', ['pid' => $v.id])}" class="layui-btn layui-btn-xs"><i class="fa fa-plus-circle"></i> 添加子分类</a>
+					<a href="{:url('admin/article/edit_category', ['id' => $v.id])}" class="layui-btn layui-btn-xs layui-btn-normal"><i class="fa fa-edit"></i> 编辑</a>
+					<a href="{:url('admin/article/del_category', ['id' => $v.id])}" class="layui-btn layui-btn-xs layui-btn-danger ajax-delete"><i class="fa fa-trash-o"></i> 删除</a>
+				</td>
+			</tr>
+			{/foreach}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/block}

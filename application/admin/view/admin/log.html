@@ -1,0 +1,36 @@
+{extend name="public:base" /}
+{block name="body"}
+<div class="layui-card">
+	<div class="layui-card-body">
+		<table class="layui-table layui-form">
+			<thead>
+				<tr>
+					<th>管理员ID</th>
+					<th>管理员</th>
+					<th>IP地址</th>
+					<th>请求链接</th>
+					<th>请求类型</th>
+					<th>资源类型</th>
+					<th>操作行为</th>
+					<th>操作时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach name="list" item="v" empty="$empty"}
+				<tr>
+					<td>{$v.admin_id}</td>
+					<td>{$v.username}</td>
+					<td>{$v.ip}</td>
+					<td>{$v.url}</td>
+					<td>{$v.method}</td>
+					<td>{$v.type}</td>
+					<td>{$v.remark}</td>
+					<td>{$v.add_time|date='Y-m-d H:i:s', ###}</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+		<div class="page">{$list->render()}</div>
+	</div>
+</div>
+{/block}
