@@ -8,6 +8,6 @@ class Index extends IndexBase
 {
     public function index()
     {
-        return '<h1>Hello, Welcome to OpenBMS</h1>';
+        return $this->fetch();
     }
 }
