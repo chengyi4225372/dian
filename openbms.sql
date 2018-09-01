@@ -86,7 +86,7 @@ CREATE TABLE `ob_admin` (
   `edit_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `ob_admin` (
 
 LOCK TABLES `ob_admin` WRITE;
 /*!40000 ALTER TABLE `ob_admin` DISABLE KEYS */;
-INSERT INTO `ob_admin` VALUES (1,'admin','e10adc3949ba59abbe56e057f20f883e',1,1535705476,'127.0.0.1',75,0,1506398114),(2,'demo','e10adc3949ba59abbe56e057f20f883e',1,1535632398,'127.0.0.1',2,0,1535599754);
+INSERT INTO `ob_admin` VALUES (1,'admin','e10adc3949ba59abbe56e057f20f883e',1,1535765695,'127.0.0.1',77,0,1506398114),(2,'demo','e10adc3949ba59abbe56e057f20f883e',1,1535632398,'127.0.0.1',2,0,1535599754);
 /*!40000 ALTER TABLE `ob_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ CREATE TABLE `ob_admin_log` (
 
 LOCK TABLES `ob_admin_log` WRITE;
 /*!40000 ALTER TABLE `ob_admin_log` DISABLE KEYS */;
-INSERT INTO `ob_admin_log` VALUES (1,1,'admin','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36','127.0.0.1','http://www.openbms.cn/admin/index/logout.html','GET','xml','[]','退出了后台系统',1535715363);
+INSERT INTO `ob_admin_log` VALUES (1,1,'admin','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36','127.0.0.1','http://www.openbms.cn/admin/setting/index.html','POST','json','{\"logo\":\"\\/public\\/uploads\\/20180901\\/828a848639e1ad4a8679595aeb32f404.png\",\"site_name\":\"OpenBMS\",\"site_title\":\"OpenBMS \\u5f00\\u6e90\\u540e\\u53f0\\u7ba1\\u7406\\u7cfb\\u7edf\",\"site_keywords\":\"OpenBMS \\u5f00\\u6e90\\u540e\\u53f0\\u7ba1\\u7406\\u7cfb\\u7edf\",\"site_description\":\"Open Background Management System \\u5f00\\u6e90\\u540e\\u53f0\\u7ba1\\u7406\\u7cfb\\u7edf\",\"site_copyright\":\"OpenBMS\",\"site_icp\":\"\",\"site_code\":\"\"}','更新基本设置',1535771552);
 /*!40000 ALTER TABLE `ob_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +272,7 @@ CREATE TABLE `ob_auth_rule` (
 
 LOCK TABLES `ob_auth_rule` WRITE;
 /*!40000 ALTER TABLE `ob_auth_rule` DISABLE KEYS */;
-INSERT INTO `ob_auth_rule` VALUES (1,0,'内容','admin/article/index','fa fa-book',2,'nav',1),(2,0,'会员','admin/user/index','fa fa-users',3,'nav',1),(3,0,'扩展','admin/ad/index','fa fa-puzzle-piece',4,'nav',1),(4,0,'设置','admin/setting/index','fa fa-cog',5,'nav',1),(5,0,'权限','admin/admin/index','fa fa-lock',6,'nav',1),(6,4,'基本设置','admin/setting/index','fa fa-cog',0,'nav',1),(7,4,'配置管理','admin/config/index','fa fa-wrench',0,'nav',1),(8,4,'配置分组','admin/config/group','fa fa-navicon',0,'nav',1),(9,5,'权限规则','admin/auth/rule','fa fa-th-list',3,'nav',1),(10,3,'广告分类','admin/ad/category','fa fa-navicon',2,'nav',1),(11,3,'广告管理','admin/ad/index','fa fa-image',1,'nav',1),(12,2,'会员管理','admin/user/index','fa fa-users',0,'nav',1),(13,1,'文章分类','admin/article/category','fa fa-navicon',2,'nav',1),(14,1,'文章管理','admin/article/index','fa fa-book',1,'nav',1),(15,2,'会员日志','admin/user/log','fa fa-clock-o',0,'nav',1),(16,5,'管理员','admin/admin/index','fa fa-user',0,'nav',1),(17,5,'权限组','admin/auth/group','fa fa-users',0,'nav',1),(18,5,'管理员日志','admin/admin/log','fa fa-clock-o',4,'nav',1),(19,0,'控制台','admin/index/index','',1,'auth',1),(20,9,'新增','admin/auth/add_rule','',0,'auth',1),(21,19,'修改密码','admin/index/edit_password','',2,'auth',1),(22,19,'清除缓存','admin/index/clear','',1,'auth',1),(23,19,'退出登录','admin/index/logout','',3,'auth',1),(24,14,'新增','admin/article/add','',0,'auth',1),(25,14,'编辑','admin/article/edit','',0,'auth',1),(26,14,'删除','admin/article/del','',0,'auth',1),(27,14,'设置状态','admin/article/set_status','',0,'auth',1),(28,14,'设置排序','admin/article/set_sort_order','',0,'auth',1),(29,13,'新增','admin/article/add_category','',0,'auth',1),(30,13,'编辑','admin/article/edit_category','',0,'auth',1),(31,13,'删除','admin/article/del_category','',0,'auth',1),(32,13,'设置排序','admin/article/set_category_sort_order','',0,'auth',1),(33,12,'新增','admin/user/add','',0,'auth',1),(34,12,'编辑','admin/user/edit','',0,'auth',1),(35,12,'删除','admin/user/del','',0,'auth',1),(36,12,'设置状态','admin/user/set_status','',0,'auth',1),(37,11,'新增','admin/ad/add','',0,'auth',1),(38,11,'编辑','admin/ad/edit','',0,'auth',1),(39,11,'删除','admin/ad/del','',0,'auth',1),(40,11,'设置状态','admin/ad/set_status','',0,'auth',1),(41,11,'设置排序','admin/ad/set_sort_order','',0,'auth',1),(42,10,'新增','admin/ad/add_category','',0,'auth',1),(43,10,'编辑','admin/ad/edit_category','',0,'auth',1),(44,10,'删除','admin/ad/del_category','',0,'auth',1),(45,6,'更新','admin/setting/save','',0,'auth',1),(46,7,'新增','admin/config/add','',0,'auth',1),(47,7,'编辑','admin/config/edit','',0,'auth',1),(48,7,'删除','admin/config/del','',0,'auth',1),(49,7,'设置状态','admin/config/set_status','',0,'auth',1),(50,7,'设置排序','admin/config/set_sort_order','',0,'auth',1),(51,8,'新增','admin/config/add_group','',0,'auth',1),(52,8,'编辑','admin/config/edit_group','',0,'auth',1),(53,8,'删除','admin/config/del_group','',0,'auth',1),(54,8,'设置状态','admin/config/set_group_status','',0,'auth',1),(55,8,'设置排序','admin/config/set_group_sort_order','',0,'auth',1),(56,9,'编辑','admin/auth/edit_rule','',0,'auth',1),(57,9,'删除','admin/auth/del_rule','',0,'auth',1),(58,16,'新增','admin/admin/add','',0,'auth',1),(59,16,'编辑','admin/admin/edit','',0,'auth',1),(60,16,'删除','admin/admin/del','',0,'auth',1),(61,16,'设置状态','admin/admin/set_status','',0,'auth',1),(62,17,'新增','admin/auth/add_group','',0,'auth',1),(63,17,'编辑','admin/auth/edit_group','',0,'auth',1),(64,17,'删除','admin/auth/del_group','',0,'auth',1),(65,17,'设置状态','admin/auth/set_group_status','',0,'auth',1);
+INSERT INTO `ob_auth_rule` VALUES (1,0,'内容','admin/article/index','fa fa-book',2,'nav',1),(2,0,'会员','admin/user/index','fa fa-users',3,'nav',1),(3,0,'扩展','admin/ad/index','fa fa-puzzle-piece',4,'nav',1),(4,0,'设置','admin/setting/index','fa fa-cog',5,'nav',1),(5,0,'权限','admin/admin/index','fa fa-lock',6,'nav',1),(6,4,'基本设置','admin/setting/index','fa fa-cog',0,'nav',1),(7,4,'配置管理','admin/config/index','fa fa-cubes',2,'nav',1),(8,4,'配置分组','admin/config/group','fa fa-navicon',3,'nav',1),(9,5,'权限规则','admin/auth/rule','fa fa-th-list',3,'nav',1),(10,3,'广告分类','admin/ad/category','fa fa-navicon',2,'nav',1),(11,3,'广告管理','admin/ad/index','fa fa-image',1,'nav',1),(12,2,'会员管理','admin/user/index','fa fa-users',0,'nav',1),(13,1,'文章分类','admin/article/category','fa fa-navicon',2,'nav',1),(14,1,'文章管理','admin/article/index','fa fa-book',1,'nav',1),(15,2,'会员日志','admin/user/log','fa fa-clock-o',0,'nav',1),(16,5,'管理员','admin/admin/index','fa fa-user',0,'nav',1),(17,5,'权限组','admin/auth/group','fa fa-users',0,'nav',1),(18,5,'管理员日志','admin/admin/log','fa fa-clock-o',4,'nav',1),(19,0,'控制台','admin/index/index','',1,'auth',1),(20,9,'新增','admin/auth/add_rule','',0,'auth',1),(21,19,'修改密码','admin/index/edit_password','',2,'auth',1),(22,19,'清除缓存','admin/index/clear','',1,'auth',1),(23,19,'退出登录','admin/index/logout','',3,'auth',1),(24,14,'新增','admin/article/add','',0,'auth',1),(25,14,'编辑','admin/article/edit','',0,'auth',1),(26,14,'删除','admin/article/del','',0,'auth',1),(27,14,'设置状态','admin/article/set_status','',0,'auth',1),(28,14,'设置排序','admin/article/set_sort_order','',0,'auth',1),(29,13,'新增','admin/article/add_category','',0,'auth',1),(30,13,'编辑','admin/article/edit_category','',0,'auth',1),(31,13,'删除','admin/article/del_category','',0,'auth',1),(32,13,'设置排序','admin/article/set_category_sort_order','',0,'auth',1),(33,12,'新增','admin/user/add','',0,'auth',1),(34,12,'编辑','admin/user/edit','',0,'auth',1),(35,12,'删除','admin/user/del','',0,'auth',1),(36,12,'设置状态','admin/user/set_status','',0,'auth',1),(37,11,'新增','admin/ad/add','',0,'auth',1),(38,11,'编辑','admin/ad/edit','',0,'auth',1),(39,11,'删除','admin/ad/del','',0,'auth',1),(40,11,'设置状态','admin/ad/set_status','',0,'auth',1),(41,11,'设置排序','admin/ad/set_sort_order','',0,'auth',1),(42,10,'新增','admin/ad/add_category','',0,'auth',1),(43,10,'编辑','admin/ad/edit_category','',0,'auth',1),(44,10,'删除','admin/ad/del_category','',0,'auth',1),(46,7,'新增','admin/config/add','',0,'auth',1),(47,7,'编辑','admin/config/edit','',0,'auth',1),(48,7,'删除','admin/config/del','',0,'auth',1),(49,7,'设置状态','admin/config/set_status','',0,'auth',1),(50,7,'设置排序','admin/config/set_sort_order','',0,'auth',1),(51,8,'新增','admin/config/add_group','',0,'auth',1),(52,8,'编辑','admin/config/edit_group','',0,'auth',1),(53,8,'删除','admin/config/del_group','',0,'auth',1),(54,8,'设置状态','admin/config/set_group_status','',0,'auth',1),(55,8,'设置排序','admin/config/set_group_sort_order','',0,'auth',1),(56,9,'编辑','admin/auth/edit_rule','',0,'auth',1),(57,9,'删除','admin/auth/del_rule','',0,'auth',1),(58,16,'新增','admin/admin/add','',0,'auth',1),(59,16,'编辑','admin/admin/edit','',0,'auth',1),(60,16,'删除','admin/admin/del','',0,'auth',1),(61,16,'设置状态','admin/admin/set_status','',0,'auth',1),(62,17,'新增','admin/auth/add_group','',0,'auth',1),(63,17,'编辑','admin/auth/edit_group','',0,'auth',1),(64,17,'删除','admin/auth/del_group','',0,'auth',1),(65,17,'设置状态','admin/auth/set_group_status','',0,'auth',1),(66,4,'系统配置','admin/setting/system','fa fa-wrench',1,'nav',1);
 /*!40000 ALTER TABLE `ob_auth_rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +304,7 @@ CREATE TABLE `ob_config` (
 
 LOCK TABLES `ob_config` WRITE;
 /*!40000 ALTER TABLE `ob_config` DISABLE KEYS */;
-INSERT INTO `ob_config` VALUES (4,1,'网站状态','site_status','radio','1','1:开启\r\n0:关闭',8,1,1),(5,1,'关闭原因','colse_explain','textarea','','',9,1,1),(6,1,'分页数量','page_number','input','10','',10,1,1),(7,1,'网站标题','site_title','input','OpenBMS 开源后台管理系统','',2,1,1),(8,1,'网站关键字','site_keywords','input','OpenBMS 开源后台管理系统','',3,1,1),(9,1,'网站描述','site_description','textarea','Open Background Management System 开源后台管理系统','',4,1,1),(10,1,'版权信息','site_copyright','input','OpenBMS','',5,1,1),(11,1,'ICP备案号','site_icp','input','粤ICP备88888888号','',6,1,1),(12,1,'统计代码','site_code','textarea','','',7,1,1),(13,1,'网站logo','logo','image','','',0,1,1),(14,1,'网站名称','site_name','input','OpenBMS','',1,1,0);
+INSERT INTO `ob_config` VALUES (7,1,'网站标题','site_title','input','OpenBMS 开源后台管理系统','',2,1,1),(8,1,'网站关键字','site_keywords','input','OpenBMS 开源后台管理系统','',3,1,1),(9,1,'网站描述','site_description','textarea','Open Background Management System 开源后台管理系统','',4,1,1),(10,1,'版权信息','site_copyright','input','OpenBMS','',5,1,1),(11,1,'ICP备案号','site_icp','input','','',6,1,1),(12,1,'统计代码','site_code','textarea','','',7,1,1),(13,1,'网站logo','logo','image','/public/uploads/20180901/828a848639e1ad4a8679595aeb32f404.png','',0,1,1),(14,1,'网站名称','site_name','input','OpenBMS','',1,1,0);
 /*!40000 ALTER TABLE `ob_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,7 +323,7 @@ CREATE TABLE `ob_config_group` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态/0禁用/1启用',
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '系统/0否/1是(不可删除)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='配置分组';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='配置分组';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,6 +357,31 @@ LOCK TABLES `ob_config_type` WRITE;
 /*!40000 ALTER TABLE `ob_config_type` DISABLE KEYS */;
 INSERT INTO `ob_config_type` VALUES ('单行文本','input'),('多行文本','textarea'),('下拉选项','select'),('单选项','radio'),('图片','image');
 /*!40000 ALTER TABLE `ob_config_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ob_system`
+--
+
+DROP TABLE IF EXISTS `ob_system`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ob_system` (
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '配置标识',
+  `value` text NOT NULL COMMENT '配置默认值',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='配置表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ob_system`
+--
+
+LOCK TABLES `ob_system` WRITE;
+/*!40000 ALTER TABLE `ob_system` DISABLE KEYS */;
+INSERT INTO `ob_system` VALUES ('colse_explain','','关闭原因'),('page_number','10','分页数量'),('website_status','1','网站状态');
+/*!40000 ALTER TABLE `ob_system` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -431,4 +456,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-31 19:37:47
+-- Dump completed on 2018-09-01 11:16:13
