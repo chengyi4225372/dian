@@ -24,7 +24,7 @@ class Article extends AdminBase
             ->view('article_category', 'category_name', 'article.cid=article_category.id', 'left')
             ->order('id desc')
             ->where($where)
-            ->paginate(config('system.page_number'), false, ['query' => $query]);
+            ->paginate(config('page_number'), false, ['query' => $query]);
         $this->assign('list', $list);
         $article_category = Db::name('article_category')->order('sort_order asc')->select();
         $this->assign('article_category', list_to_level($article_category));

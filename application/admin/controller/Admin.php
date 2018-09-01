@@ -13,7 +13,7 @@ class Admin extends AdminBase
             ->view('auth_group_access', 'group_id', 'admin.id=auth_group_access.uid', 'left')
             ->view('auth_group', 'name', 'auth_group_access.group_id=auth_group.id', 'left')
             ->where('admin.username', 'neq', 'admin')
-            ->paginate(config('system.page_number'));
+            ->paginate(config('page_number'));
         $this->assign('list', $list);
         return $this->fetch();
     }
@@ -110,7 +110,7 @@ class Admin extends AdminBase
 
     public function log()
     {
-        $this->assign('list', Db::name('admin_log')->order('add_time desc')->paginate(config('system.page_number')));
+        $this->assign('list', Db::name('admin_log')->order('add_time desc')->paginate(config('page_number')));
         return $this->fetch();
     }
 }

@@ -1,0 +1,35 @@
+{extend name="public:base" /}
+{block name="body"}
+<div class="layui-card">
+    <div class="layui-card-header">系统配置</div>
+    <div class="layui-card-body">
+        <form action="{:url('admin/setting/system')}" class="layui-form" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">网站状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="website_status" value="1" title="开启" checked="checked">
+                    <input type="radio" name="website_status" value="0" title="关闭" {if isset($data) and $data.website_status eq '0'}checked="checked"{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">关闭原因</label>
+                <div class="layui-input-block">
+                    <textarea name="colse_explain" class="layui-textarea">{$data.colse_explain|default=''}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">分页数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="page_number" value="{$data.page_number|default=''}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-filter="*" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

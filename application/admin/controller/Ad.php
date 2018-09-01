@@ -24,7 +24,7 @@ class Ad extends AdminBase
             ->view('ad_category', 'category_name', 'ad.cid=ad_category.id', 'left')
             ->order('sort_order asc')
             ->where($where)
-            ->paginate(config('system.page_number'), false, ['query' => $query]);
+            ->paginate(config('page_number'), false, ['query' => $query]);
         $this->assign('list', $list);
         $this->assign('ad_category', Db::name('ad_category')->select());
         return $this->fetch();
@@ -68,7 +68,7 @@ class Ad extends AdminBase
 
     public function category()
     {
-        $this->assign('list', Db::name('ad_category')->paginate(config('system.page_number')));
+        $this->assign('list', Db::name('ad_category')->paginate(config('page_number')));
         return $this->fetch();
     }
 

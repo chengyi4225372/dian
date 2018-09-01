@@ -62,7 +62,7 @@ class Config extends AdminBase
     // 配置分组
     public function group()
     {
-        $this->assign('list', Db::name('config_group')->order('sort_order asc')->paginate(config('system.page_number')));
+        $this->assign('list', Db::name('config_group')->order('sort_order asc')->paginate(config('page_number')));
         return $this->fetch();
     }
 

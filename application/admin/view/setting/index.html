@@ -11,7 +11,7 @@
             <div class="layui-tab-content">
                 {foreach name="list" key="k" item="v"}
                 <div class="layui-tab-item {if $k eq 0}layui-show{/if}">
-                    <form action="{:url('admin/setting/save')}" class="layui-form" method="post">
+                    <form action="{:url('admin/setting/index')}" class="layui-form" method="post">
                         {foreach name="v.config" item="config"}
                         <div class="layui-form-item">
                             <label class="layui-form-label">{$config.title}</label>

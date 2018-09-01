@@ -9,7 +9,7 @@ class Auth extends AdminBase
 {
     public function group()
     {
-        $this->assign('list', Db::name('auth_group')->paginate(config('system.page_number')));
+        $this->assign('list', Db::name('auth_group')->paginate(config('page_number')));
         return $this->fetch();
     }
 

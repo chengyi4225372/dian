@@ -14,7 +14,7 @@ class User extends AdminBase
 
     public function index()
     {
-        $list = Db::name('user')->order('add_time desc')->paginate(config('system.page_number'));
+        $list = Db::name('user')->order('add_time desc')->paginate(config('page_number'));
         $this->assign('list', $list);
         return $this->fetch();
     }
@@ -99,7 +99,7 @@ class User extends AdminBase
 
     public function log()
     {
-        $this->assign('list', Db::name('user_log')->order('add_time desc')->paginate(config('system.page_number')));
+        $this->assign('list', Db::name('user_log')->order('add_time desc')->paginate(config('page_number')));
         return $this->fetch();
     }
 }

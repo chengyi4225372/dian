@@ -14,21 +14,41 @@ class Setting extends AdminBase
 
     public function index()
     {
+        if ($this->request->isPost()) {
+            $param  = $this->request->param();
+            $config = Db::name('config');
+            foreach ($param as $name => $value) {
+                $config->where('name', $name)->setField('value', $value);
+            }
+            clear_cache();
+            insert_admin_log('更新基本设置');
+            $this->success('更新成功', '');
+        }
         $this->assign('list', ob_config()->get_config(['status' => 1]));
         return $this->fetch();
     }
 
-    public function save()
+    public function system()
     {
-        if (request()->isPost()) {
-            $data   = input();
-            $config = Db::name('config');
-            foreach ($data as $name => $value) {
-                $config->where('name', $name)->setField('value', $value);
+        if ($this->request->isPost()) {
+            try {
+                $param = $this->request->param();
+                foreach ($param as $name => $value) {
+                    Db::name('system')->where('name', $name)->setField('value', $value);
+                }
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
             clear_cache();
-            insert_admin_log('更新系统基本设置');
-            $this->success('更新成功', '');
+            insert_admin_log('更新系统设置');
+            $this->success('保存成功');
         }
+        $list = Db::name('system')->select();
+        $data = [];
+        foreach ($list as $v) {
+            $data[$v['name']] = $v['value'];
+        }
+        $this->assign('data', $data);
+        return $this->fetch();
     }
 }
