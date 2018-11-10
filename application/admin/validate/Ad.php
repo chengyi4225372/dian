@@ -7,14 +7,14 @@ use think\Validate;
 class Ad extends Validate
 {
     protected $rule = [
-        'cid'   => 'require',
-        'image' => 'require',
-        'name'  => 'require',
+        'image'    => 'require',
+        'category' => 'require',
+        'name'     => 'require',
     ];
 
     protected $message = [
-        'cid.require'   => '请选择所属分类',
-        'image.require' => '请上传广告图片',
-        'name.require'  => '名称不能为空',
+        'image.require'    => '请上传广告图片',
+        'category.require' => '请选择所属分类',
+        'name.require'     => '名称不能为空',
     ];
 }

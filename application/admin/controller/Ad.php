@@ -3,99 +3,71 @@
 namespace app\admin\controller;
 
 use app\common\controller\AdminBase;
-use think\Db;
 
 class Ad extends AdminBase
 {
+    protected function _initialize()
+    {
+        parent::_initialize();
+        if ($this->request->isGet()) {
+            $category = [
+                'index' => '首页轮播',
+                'other' => '其它图片',
+            ];
+            $this->assign('category', $category);
+        }
+    }
+
     public function index()
     {
         $param = $this->request->param();
-        $query = [];
         $where = [];
         if (isset($param['name'])) {
-            $where['name'] = ['like', "%" . $param['name'] . "%"];
-            $query['name'] = urlencode($param['name']);
+            $where['name'] = ['like', "%" . $param['title'] . "%"];
         }
-        if (isset($param['cid'])) {
-            $where['cid'] = $param['cid'];
-            $query['cid'] = urlencode($param['cid']);
+        if (isset($param['category'])) {
+            $where['category'] = $param['category'];
         }
-        $list = Db::view('ad')
-            ->view('ad_category', 'category_name', 'ad.cid=ad_category.id', 'left')
-            ->order('sort_order asc')
-            ->where($where)
-            ->paginate(config('page_number'), false, ['query' => $query]);
-        $this->assign('list', $list);
-        $this->assign('ad_category', Db::name('ad_category')->select());
-        return $this->fetch();
+        $list = model('ad')->order('id desc')->where($where)
+            ->paginate(config('page_number'), false, ['query' => $param]);
+        return $this->fetch('index', ['list' => $list]);
     }
 
     public function add()
     {
         if ($this->request->isPost()) {
-            $this->single_table_insert('ad', '添加了广告图', url('admin/ad/index'));
+            if ($this->insert('ad', $this->request->param()) === true) {
+                insert_admin_log('添加了广告图');
+                $this->success('添加成功', url('admin/ad/index'));
+            } else {
+                $this->error($this->errorMsg);
+            }
         }
-        $this->assign('ad_category', Db::name('ad_category')->select());
-        $this->assign('action', url('admin/ad/add'));
-        return $this->fetch();
+        return $this->fetch('save');
     }
 
     public function edit()
     {
         if ($this->request->isPost()) {
-            $this->single_table_update('ad', '修改了广告图', url('admin/ad/index'));
+            if ($this->update('ad', $this->request->param(), input('_verify', true)) === true) {
+                insert_admin_log('修改了广告图');
+                $this->success('修改成功', url('admin/ad/index'));
+            } else {
+                $this->error($this->errorMsg);
+            }
         }
-        $this->assign('data', Db::name('ad')->where('id', (int)input('id'))->find());
-        $this->assign('ad_category', Db::name('ad_category')->select());
-        $this->assign('action', url('admin/ad/edit'));
-        return $this->fetch('add');
+        return $this->fetch('save', ['data' => model('ad')::get(input('id'))]);
     }
 
     public function del()
     {
-        $this->single_table_delete('ad', '删除了广告图');
-    }
-
-    public function set_status()
-    {
-        $this->single_table_set('ad', '修改了广告图状态');
-    }
-
-    public function set_sort_order()
-    {
-        $this->single_table_set('ad', '修改了广告图排序');
-    }
-
-    public function category()
-    {
-        $this->assign('list', Db::name('ad_category')->paginate(config('page_number')));
-        return $this->fetch();
-    }
-
-    public function add_category()
-    {
         if ($this->request->isPost()) {
-            $this->single_table_insert('ad_category', '添加了广告图分类', url('admin/ad/category'));
+            if ($this->delete('ad', $this->request->param()) === true) {
+                insert_admin_log('删除了广告图');
+                $this->success('删除成功');
+            } else {
+                $this->error($this->errorMsg);
+            }
         }
-        $this->assign('action', url('admin/ad/add_category'));
-        return $this->fetch();
-    }
-
-    public function edit_category()
-    {
-        if ($this->request->isPost()) {
-            $this->single_table_update('ad_category', '修改了广告图分类', url('admin/ad/category'));
-        }
-        $this->assign('data', Db::name('ad_category')->where('id', (int)input('id'))->find());
-        $this->assign('action', url('admin/ad/edit_category'));
-        return $this->fetch('add_category');
-    }
-
-    public function del_category()
-    {
-        if (Db::name('ad')->where('cid', (int)input('id'))->count()) {
-            $this->error('该分类下有广告，请先删除');
-        }
-        $this->single_table_delete('ad_category', '删除了广告图分类');
     }
 }

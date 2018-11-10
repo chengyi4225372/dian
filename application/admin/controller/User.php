@@ -3,7 +3,6 @@
 namespace app\admin\controller;
 
 use app\common\controller\AdminBase;
-use think\Db;
 
 class User extends AdminBase
 {
@@ -14,92 +13,71 @@ class User extends AdminBase
 
     public function index()
     {
-        $list = Db::name('user')->order('add_time desc')->paginate(config('page_number'));
-        $this->assign('list', $list);
-        return $this->fetch();
+        return $this->fetch('index', ['list' => model('user')->order('id desc')->paginate(config('page_number'))]);
     }
 
     public function add()
     {
         if ($this->request->isPost()) {
-            $param    = $this->request->param();
-            $validate = $this->validate($param, 'user');
-            if ($validate !== true) {
-                $this->error($validate);
-            }
-            if (empty($param['password'])) {
-                $this->error('密码不能为空');
-            }
-            $data = [
-                'username' => $param['username'],
-                'password' => md5($param['password']),
-                'mobile'   => $param['mobile'],
-                'email'    => $param['email'],
-                'add_time' => time(),
-            ];
-            try {
-                $user_id = Db::name('user')->insert($data, false, true);
-            } catch (\Exception $e) {
-                $this->error($e->getMessage());
-            }
-            if ($user_id) {
+            $param = $this->request->param();
+            empty($param['password']) && $this->error('密码不能为空');
+            if ($this->insert('user', $param) === true) {
                 insert_admin_log('添加了用户');
                 $this->success('添加成功', url('admin/user/index'));
             } else {
-                $this->error('添加失败');
+                $this->error($this->errorMsg);
             }
         }
-        $this->assign('action', url('admin/user/add'));
-        return $this->fetch('edit');
+        return $this->fetch('save');
     }
 
     public function edit()
     {
         if ($this->request->isPost()) {
-            $param    = $this->request->param();
-            $validate = $this->validate($param, 'user');
-            if ($validate !== true) {
-                $this->error($validate);
+            $param = $this->request->param();
+            if (empty($param['password'])) {
+                unset($param['password']);
             }
-            $data = [
-                'id'       => $param['id'],
-                'username' => $param['username'],
-                'mobile'   => $param['mobile'],
-                'email'    => $param['email'],
-            ];
-            if (!empty($param['password'])) {
-                $data['password'] = md5($param['password']);
-            }
-            try {
-                $result = Db::name('user')->update($data);
-            } catch (\Exception $e) {
-                $this->error($e->getMessage());
-            }
-            if ($result) {
+            if ($this->update('user', $param, input('_verify', true)) === true) {
                 insert_admin_log('修改了用户');
-                $this->success('更新成功', url('admin/user/index'));
+                $this->success('修改成功', url('admin/user/index'));
             } else {
-                $this->error('更新失败');
+                $this->error($this->errorMsg);
             }
         }
-        $this->assign('data', Db::name('user')->where('id', (int) input('id'))->find());
-        $this->assign('action', url('admin/user/edit'));
-        return $this->fetch();
+        return $this->fetch('save', ['data' => model('user')::get(input('id'))]);
     }
 
     public function del()
     {
-        $this->single_table_delete('user', '删除了用户');
+        if ($this->request->isPost()) {
+            if ($this->delete('user', $this->request->param()) === true) {
+                insert_admin_log('删除了用户');
+                $this->success('删除成功');
+            } else {
+                $this->error($this->errorMsg);
+            }
+        }
     }
 
-    public function set_status()
+    public function export()
     {
-        $this->single_table_set('user', '修改了用户状态');
+        $data = collection(model('user')->field('id,username,mobile')->order('id desc')->select())->toArray();
+        array_unshift($data, ['ID', '用户名', '手机号']);
+        insert_admin_log('导出了用户');
+        export_excel($data, date('YmdHis'));
     }
 
     public function log()
     {
-        $this->assign('list', Db::name('user_log')->order('add_time desc')->paginate(config('page_number')));
-        return $this->fetch();
+        return $this->fetch('log', ['list' => model('userLog')->order('create_time desc')->paginate(config('page_number'))]);
+    }
+
+    public function truncate()
+    {
+        if ($this->request->isPost()) {
+            db()->query('TRUNCATE ' . config('database.prefix') . 'user_log');
+            $this->success('操作成功');
+        }
     }
 }

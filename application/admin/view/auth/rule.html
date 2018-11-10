@@ -5,18 +5,19 @@
 {block name="body"}
 <div class="layui-card">
     <div class="layui-card-body">
-        <a href="javascript:;" class="layui-btn" id="treeAdd"><i class="fa fa-plus-circle"></i> 添加规则</a>
-        <a href="javascript:;" class="layui-btn layui-btn-normal" id="treeEdit"><i class="fa fa-edit"></i> 编辑规则</a>
-        <a href="javascript:;" class="layui-btn layui-btn-danger" id="treeRemove"><i class="fa fa-trash-o"></i> 删除规则</a>
-        <div class="ztree" id="auth_rule"></div>
+        <div class="layui-btn-group">
+            <a href="javascript:;" class="layui-btn" id="addRule"><i class="fa fa-plus-circle"></i> 添加规则</a>
+            <a href="javascript:;" class="layui-btn layui-btn-normal" id="editRule"><i class="fa fa-edit"></i> 编辑规则</a>
+            <a href="javascript:;" class="layui-btn layui-btn-danger" id="delRule"><i class="fa fa-trash-o"></i> 删除规则</a>
+        </div>
+        <div class="ztree" id="authRule"></div>
     </div>
 </div>
 {/block}
 {block name="js"}
-<script src="__ADMIN__/js/jquery-2.1.4.min.js"></script>
 <script src="__ADMIN__/ztree/js/jquery.ztree.all.min.js"></script>
 <script>
-$.fn.zTree.init($("#auth_rule"), {
+$.fn.zTree.init($("#authRule"), {
     view: {
         dblClickExpand: false,
         showLine: true,
@@ -34,23 +35,23 @@ $.fn.zTree.init($("#auth_rule"), {
             enable: true
         }
     }
-}, {$auth_rule});
+}, {$authRule});
 
-$('#treeAdd').on('click', function(){
-    var zTree = $.fn.zTree.getZTreeObj('auth_rule'),
+$('#addRule').on('click', function(){
+    var zTree = $.fn.zTree.getZTreeObj('authRule'),
         nodes = zTree.getSelectedNodes(),
         treeNode = nodes[0];
     var id = treeNode == undefined ? 0 : treeNode.id;
     var index = layer.open({
         title: '添加规则',
         type: 2,
-        area: ['400px', '376px'],
-        content: '{:url("admin/auth/add_rule")}?id=' + id,
+        area: ['430px', '430px'],
+        content: '{:url("admin/auth/addRule")}?id=' + id,
     });
 });
 
-$('#treeEdit').on('click', function(){
-    var zTree = $.fn.zTree.getZTreeObj('auth_rule'),
+$('#editRule').on('click', function(){
+    var zTree = $.fn.zTree.getZTreeObj('authRule'),
         nodes = zTree.getSelectedNodes(),
         treeNode = nodes[0];
     if (nodes.length == 0) {
@@ -61,18 +62,18 @@ $('#treeEdit').on('click', function(){
         var index = layer.open({
             title: '修改规则',
             type: 2,
-            area: ['400px', '376px'],
-            content: '{:url("admin/auth/edit_rule")}?id=' + id
+            area: ['430px', '430px'],
+            content: '{:url("admin/auth/editRule")}?id=' + id
         });
     }
 });
 
-$('#treeRemove').on('click', function(){
+$('#delRule').on('click', function(){
     layer.confirm('确定删除？', {
         icon: 3,
         title: '提示'
     }, function(index) {
-        var zTree = $.fn.zTree.getZTreeObj('auth_rule'),
+        var zTree = $.fn.zTree.getZTreeObj('authRule'),
             nodes = zTree.getSelectedNodes(),
             treeNode = nodes[0];
         if (nodes.length == 0) {
@@ -86,8 +87,8 @@ $('#treeRemove').on('click', function(){
                 shade: 0.3
             });
             $.ajax({
-                url: '{:url("admin/auth/del_rule")}?id=' + id,
-                type: 'get',
+                url: '{:url("admin/auth/delRule")}?id=' + id,
+                type: 'post',
                 dataType: 'json',
                 success: function(result) {
                     if (result.code === 1 && result.url != '') {
@@ -97,6 +98,10 @@ $('#treeRemove').on('click', function(){
                     }
                     layer.close(index);
                     layer.msg(result.msg);
+                },
+                error: function (xhr, state, errorThrown) {
+                    layer.close(index);
+                    layer.msg(state + '：' + errorThrown);
                 }
             });
         }

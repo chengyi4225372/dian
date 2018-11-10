@@ -10,12 +10,5 @@
 // +----------------------------------------------------------------------
 
 return [
-    '__pattern__' => [
-        'name' => '\w+',
-    ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],
-
+    'admin$' => 'admin/index/login', // 后台入口地址
 ];

@@ -16,6 +16,8 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
+            'tp5er\\' => 6,
+            'think\\oracle\\' => 13,
             'think\\mongo\\' => 12,
             'think\\migration\\' => 16,
             'think\\helper\\' => 13,
@@ -30,10 +32,23 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
         'P' => 
         array (
             'Phinx\\' => 6,
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'H' => 
+        array (
+            'Hashids\\' => 8,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'tp5er\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tp5er/tp5-databackup/src',
+        ),
+        'think\\oracle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-oracle/src',
+        ),
         'think\\mongo\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-mongo/src',
@@ -68,6 +83,24 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
         array (
             0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
         ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Hashids\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hashids/hashids/lib/Hashids',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
+            ),
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -75,6 +108,7 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

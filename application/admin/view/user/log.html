@@ -2,6 +2,9 @@
 {block name="body"}
 <div class="layui-card">
     <div class="layui-card-body">
+        <div class="layui-btn-group">
+            <a href="{:url('admin/user/truncate')}" class="layui-btn layui-btn-danger ajax-delete"><i class="fa fa-trash-o"></i> 一键清空</a>
+        </div>
         <table class="layui-table layui-form">
             <thead>
                 <tr>
@@ -25,7 +28,7 @@
                     <td>{$v.method}</td>
                     <td>{$v.type}</td>
                     <td>{$v.remark}</td>
-                    <td>{$v.add_time|date='Y-m-d H:i:s', ###}</td>
+                    <td>{$v.create_time}</td>
                 </tr>
                 {/foreach}
             </tbody>

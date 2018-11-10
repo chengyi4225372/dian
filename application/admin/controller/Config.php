@@ -3,113 +3,154 @@
 namespace app\admin\controller;
 
 use app\common\controller\AdminBase;
-use think\Db;
 
 class Config extends AdminBase
 {
+    protected $noAuth = ['sendEmail'];
+
+    protected function _initialize()
+    {
+        parent::_initialize();
+    }
+
     public function index()
     {
-        $this->assign('list', ob_config()->get_config());
-        return $this->fetch();
+        $param = $this->request->param();
+        $where = [];
+        if (isset($param['title'])) {
+            $where['title'] = ['like', "%" . $param['title'] . "%"];
+        }
+        if (isset($param['group'])) {
+            $where['group'] = $param['group'];
+        }
+        $list = model('config')->order('sort_order asc,id asc')->where($where)
+            ->paginate(config('page_number'), false, ['query' => $param]);
+        return $this->fetch('index', ['list' => $list]);
     }
 
     public function add()
     {
         if ($this->request->isPost()) {
-            $this->single_table_insert('config', '添加了系统配置', url('admin/config/index'));
+            if ($this->insert('config', $this->request->param()) === true) {
+                insert_admin_log('添加了基本配置');
+                $this->success('添加成功', url('admin/config/index'));
+            } else {
+                $this->error($this->errorMsg);
+            }
         }
-        $this->assign('config_group', ob_config()->get_config_group());
-        $this->assign('config_type', ob_config()->get_config_type());
-        $this->assign('action', url('admin/config/add'));
-        return $this->fetch();
+        return $this->fetch('save');
     }
 
     public function edit()
     {
-        $data = Db::name('config')->where('id', (int) input('id'))->find();
         if ($this->request->isPost()) {
-            if ($data['system'] == 1) {
-                $this->error('系统配置不可编辑');
+            if ($this->update('config', $this->request->param(), input('_verify', true)) === true) {
+                insert_admin_log('修改了基本配置');
+                $this->success('修改成功', url('admin/config/index'));
+            } else {
+                $this->error($this->errorMsg);
             }
-            $this->single_table_update('config', '修改了系统配置', url('admin/config/index'));
         }
-        $this->assign('data', $data);
-        $this->assign('config_group', ob_config()->get_config_group());
-        $this->assign('config_type', ob_config()->get_config_type());
-        $this->assign('action', url('admin/config/edit'));
-        return $this->fetch('add');
+        return $this->fetch('save', ['data' => model('config')::get(input('id'))]);
     }
 
     public function del()
     {
-        $data = Db::name('config')->where('id', (int) input('id'))->find();
-        if ($data['system'] == 1) {
-            $this->error('系统配置不可删除');
-        }
-        $this->single_table_delete('config', '删除了系统配置');
-    }
-
-    public function set_status()
-    {
-        $this->single_table_set('config', '修改了配置状态');
-    }
-
-    public function set_sort_order()
-    {
-        $this->single_table_set('config', '修改了配置排序');
-    }
-
-    // 配置分组
-    public function group()
-    {
-        $this->assign('list', Db::name('config_group')->order('sort_order asc')->paginate(config('page_number')));
-        return $this->fetch();
-    }
-
-    // 添加配置分组
-    public function add_group()
-    {
         if ($this->request->isPost()) {
-            $this->single_table_insert('config_group', '添加了配置分类', url('admin/config/group'));
-        }
-        $this->assign('action', url('admin/config/add_group'));
-        return $this->fetch();
-    }
-
-    // 修改配置分组
-    public function edit_group()
-    {
-        $data = Db::name('config_group')->where('id', (int) input('id'))->find();
-        if ($this->request->isPost()) {
-            if ($data['system'] == 1) {
-                $this->error('系统配置分类不可编辑');
+            if ($this->delete('config', $this->request->param()) === true) {
+                insert_admin_log('删除了基本配置');
+                $this->success('删除成功');
+            } else {
+                $this->error($this->errorMsg);
             }
-            $this->single_table_update('config_group', '修改了配置分类', url('admin/config/group'));
         }
-        $this->assign('data', $data);
-        $this->assign('action', url('admin/config/edit_group'));
-        return $this->fetch('add_group');
     }
 
-    // 删除配置分组
-    public function del_group()
+    public function setting()
     {
-        $data = Db::name('config_group')->where('id', (int) input('id'))->find();
-        if ($data['system'] == 1) {
-            $this->error('系统配置分类不可删除');
+        if ($this->request->isPost()) {
+            $data = [];
+            foreach ($this->request->param() as $k => $v) {
+                $data[] = ['id' => hashids_decode($k), 'value' => $v];
+            }
+            if ($this->saveAll('config', $data, false) === true) {
+                clear_cache();
+                insert_admin_log('更新基本设置');
+                $this->success('保存成功');
+            } else {
+                $this->error($this->errorMsg);
+            }
         }
-        $this->single_table_delete('config_group', '删除了配置分类');
+        $list = [];
+        foreach (config('configGroup') as $k => $v) {
+            $list[$k]['name']   = $v;
+            $list[$k]['config'] = model('config')->where([
+                'group'  => $k,
+                'status' => 1,
+            ])->order('sort_order asc')->select();
+        }
+        return $this->fetch('setting', ['list' => $list]);
     }
 
-    // 设置配置分组状态
-    public function set_group_status()
+    public function system()
     {
-        $this->single_table_set('config_group', '修改了配置分组状态');
+        if ($this->request->isPost()) {
+            $data = [];
+            foreach ($this->request->param() as $k => $v) {
+                $data[] = ['name' => $k, 'value' => $v];
+            }
+            if ($this->saveAll('system', $data) === true) {
+                clear_cache();
+                file_put_contents('.env', 'is_develop = ' . $this->request->param('is_develop'));
+                insert_admin_log('更新系统设置');
+                $this->success('保存成功');
+            } else {
+                $this->error($this->errorMsg);
+            }
+        }
+        $data = [];
+        foreach (model('system')->select() as $v) {
+            $data[$v['name']] = $v['value'];
+        }
+        return $this->fetch('system', ['data' => $data]);
     }
 
-    // 设置配置分组排序
-    public function set_group_sort_order()
+    public function upload()
     {
-        $this->single_table_set('config_group', '修改了配置分组排序');
+        if ($this->request->isPost()) {
+            model('system')->save(['value' => serialize($this->request->param())], ['name' => 'upload_image']);
+            clear_cache();
+            insert_admin_log('修改了上传设置');
+            $this->success('保存成功');
+        }
+        $data = model('system')::get(['name' => 'upload_image']);
+        return $this->fetch('upload', ['data' => unserialize($data['value'])]);
+    }
+
+    public function email()
+    {
+        if ($this->request->isPost()) {
+            model('system')->save(['value' => serialize($this->request->param())], ['name' => 'email_server']);
+            clear_cache();
+            insert_admin_log('修改了邮件设置');
+            $this->success('保存成功');
+        }
+        $data = model('system')::get(['name' => 'email_server']);
+        return $this->fetch('email', ['data' => unserialize($data['value'])]);
+    }
+
+    // 测试发送
+    public function sendEmail()
+    {
+        if ($this->request->isPost()) {
+            $param = $this->request->param();
+            empty($param['email']) && $this->error('测试邮箱不能为空');
+            !check_email($param['email']) && $this->error('测试邮箱格式错误');
+            if (send_email($param['email'], '发送成功', '这是一封测试的邮件！', $param)) {
+                $this->success('发送成功');
+            } else {
+                $this->error('发送失败');
+            }
+        }
     }
 }

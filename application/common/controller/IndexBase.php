@@ -2,22 +2,17 @@
 
 namespace app\common\controller;
 
-use think\Db;
-
 class IndexBase extends Base
 {
     protected function _initialize()
     {
         parent::_initialize();
-        // 设置基本配置
+        !config('website_status') && die(config('colse_explain'));
         $config = cache('db_config_data');
         if (!$config) {
-            $data = ob_config()->get_config();
             $config = [];
-            foreach ($data as $v) {
-                foreach ($v['config'] as $c) {
-                    $config[$v['value']][$c['name']] = $c['value'];
-                }
+            foreach (model('Config')->select() as $v) {
+                $config[$v['group']][$v['name']] = $v['value'];
             }
             cache('db_config_data', $config);
         }

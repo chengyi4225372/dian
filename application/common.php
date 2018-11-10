@@ -9,11 +9,180 @@
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+!\think\Config::get('app_debug') && error_reporting(E_ERROR | E_PARSE);
+
 // 应用公共文件
 
-require_once 'helper.php';
+/**
+ * 发送短信
+ * @param string $mobile 手机号码
+ * @param string $template 模板ID
+ * @param json $content 发送参数
+ */
+function send_sms($mobile, $template, $content)
+{
+    $uid = '4160012';
+    $pwd = '95f2da2cd23c352f910d226aebe5e7b2';
+    $url = 'http://api.sms.cn/sms/?ac=send&uid=' . $uid . '&pwd=' . $pwd .
+        '&template=' . $template . '&mobile=' . $mobile . '&content=' . $content;
+    $res = https_request($url);
+    $arr = json_to_array($res);
+    if ($arr['stat'] == '100') {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-use think\Db;
+/**
+ * 发送邮件
+ * @param $email
+ * @param $title
+ * @param $content
+ * @param null $config
+ * @return bool
+ */
+function send_email($email, $title, $content, $config = null)
+{
+    $config = empty($config) ? unserialize(config('email_server')) : $config;
+    $mail   = new \PHPMailer\PHPMailer\PHPMailer(true); // Passing `true` enables exceptions
+    try {
+        //Server settings
+        $mail->SMTPDebug = 0;                           // Enable verbose debug output
+        $mail->isSMTP();                                // Set mailer to use SMTP
+        $mail->Host       = $config['host'];            // Specify main and backup SMTP servers
+        $mail->SMTPAuth   = true;                       // Enable SMTP authentication
+        $mail->Username   = $config['username'];        // SMTP username
+        $mail->Password   = $config['password'];        // SMTP password
+        $mail->SMTPSecure = $config['secure'];          // Enable TLS encryption, `ssl` also accepted
+        $mail->Port       = $config['port'];            // TCP port to connect to
+        //Recipients
+        $mail->setFrom($config['username'], $config['fromname']);
+        $mail->addAddress($email);                      // Name is optional
+        //Content
+        $mail->isHTML(true);                            // Set email format to HTML
+        $mail->Subject = $title;
+        $mail->Body    = $content;
+        if ($mail->send()) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
+ * 数组转xls格式的excel文件
+ * @param $data
+ * @param $title
+ * 示例数据
+ * $data = [
+ *     [NULL, 2010, 2011, 2012],
+ *     ['Q1', 12, 15, 21],
+ *     ['Q2', 56, 73, 86],
+ *     ['Q3', 52, 61, 69],
+ *     ['Q4', 30, 32, 10],
+ * ];
+ * @throws PHPExcel_Exception
+ * @throws PHPExcel_Reader_Exception
+ * @throws PHPExcel_Writer_Exception
+ */
+function export_excel($data, $title)
+{
+    // 最长执行时间,php默认为30秒,这里设置为0秒的意思是保持等待知道程序执行完成
+    ini_set('max_execution_time', '0');
+    $phpexcel = new PHPExcel();
+
+    // Set properties 设置文件属性
+    $properties = $phpexcel->getProperties();
+    $properties->setCreator("Boge");//作者是谁 可以不设置
+    $properties->setLastModifiedBy("Boge");//最后一次修改的作者
+    $properties->setTitle($title);//设置标题
+    $properties->setSubject('测试');//设置主题
+    $properties->setDescription("备注");//设置备注
+    $properties->setKeywords("关键词");//设置关键词
+    $properties->setCategory("类别");//设置类别
+
+    $sheet = $phpexcel->getActiveSheet();
+    $sheet->fromArray($data);
+    $sheet->setTitle('Sheet1'); // 设置sheet名称
+    $phpexcel->setActiveSheetIndex(0);
+    header('Content-Type: application/vnd.ms-excel');
+    header("Content-Disposition: attachment;filename=" . $title . ".xls");
+    header('Cache-Control: max-age=0');
+    header('Cache-Control: max-age=1');
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+    header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+    header('Pragma: public'); // HTTP/1.0
+    $objwriter = PHPExcel_IOFactory::createWriter($phpexcel, 'Excel5');
+    $objwriter->save('php://output');
+    exit;
+}
+
+/**
+ * http请求
+ * @param string $url 请求的地址
+ * @param array $data 发送的参数
+ */
+function https_request($url, $data = null)
+{
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    if (!empty($data)) {
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    }
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($curl);
+    curl_close($curl);
+    return $output;
+}
+
+/**
+ * 格式化字节大小
+ * @param  number $size      字节数
+ * @param  string $delimiter 数字和单位分隔符
+ * @return string            格式化后的带单位的大小
+ */
+function format_bytes($size, $delimiter = '') {
+    $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+    for ($i = 0; $size >= 1024 && $i < 5; $i++) $size /= 1024;
+    return round($size, 2) . $delimiter . $units[$i];
+}
+
+/**
+ * 把json字符串转数组
+ * @param json $p
+ * @return array
+ */
+function json_to_array($p)
+{
+    if (mb_detect_encoding($p, array('ASCII', 'UTF-8', 'GB2312', 'GBK')) != 'UTF-8') {
+        $p = iconv('GBK', 'UTF-8', $p);
+    }
+    return json_decode($p, true);
+}
+
+// 生成唯一订单号
+function build_order_no()
+{
+    return date('Ymd') . substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+}
+
+/**
+ * 获取随机位数数字
+ * @param  integer $len 长度
+ * @return string
+ */
+function rand_number($len = 6)
+{
+    return substr(str_shuffle(str_repeat('0123456789', 10)), 0, $len);
+}
 
 /**
  * 验证手机号是否正确
@@ -28,10 +197,51 @@ function check_mobile($mobile)
 }
 
 /**
+ * 验证固定电话格式
+ * @param string $tel 固定电话
+ * @return boolean
+ */
+function check_tel($tel) {
+    $chars = "/^([0-9]{3,4}-)?[0-9]{7,8}$/";
+    if (preg_match($chars, $tel)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 验证邮箱格式
+ * @param string $email 邮箱
+ * @return boolean
+ */
+function check_email($email)
+{
+    $chars = "/^[0-9a-zA-Z]+(?:[\_\.\-][a-z0-9\-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\.[a-zA-Z]+$/i";
+    if (preg_match($chars, $email)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 验证QQ号码是否正确
+ * @param number $mobile
+ */
+function check_qq($qq)
+{
+    if (!is_numeric($qq)) {
+        return false;
+    }
+    return true;
+}
+
+/**
  * 验证密码长度
  * @param string $password 需要验证的密码
- * @param int    $min      最小长度
- * @param int    $max      最大长度
+ * @param int $min 最小长度
+ * @param int $max 最大长度
  */
 function check_password($password, $min, $max)
 {
@@ -39,15 +249,6 @@ function check_password($password, $min, $max)
         return false;
     }
     return true;
-}
-
-/**
- * 清除系统缓存
- */
-function clear_cache()
-{
-    $dir = new \core\Dir();
-    $dir->delDir(ROOT_PATH . 'runtime/cache/');
 }
 
 /**
@@ -73,7 +274,7 @@ function parse_attr($value)
         $value = array();
         foreach ($array as $val) {
             list($k, $v) = explode(':', $val);
-            $value[$k]   = $v;
+            $value[$k] = $v;
         }
     } else {
         $value = $array;
@@ -84,17 +285,18 @@ function parse_attr($value)
 /**
  * 数组层级缩进转换
  * @param array $array 源数组
- * @param int   $pid
- * @param int   $level
+ * @param int $pid
+ * @param int $level
  * @return array
  */
 function list_to_level($array, $pid = 0, $level = 1)
 {
     static $list = [];
-    foreach ($array as $v) {
+    foreach ($array as $k => $v) {
         if ($v['pid'] == $pid) {
             $v['level'] = $level;
             $list[]     = $v;
+            unset($array[$k]);
             list_to_level($array, $v['id'], $level + 1);
         }
     }
@@ -137,10 +339,10 @@ function list_to_tree($list, $pk = 'id', $pid = 'pid', $child = 'children', $roo
 
 /**
  * 将list_to_tree的树还原成列表
- * @param  array $tree  原来的树
+ * @param  array $tree 原来的树
  * @param  string $child 孩子节点的键
  * @param  string $order 排序显示的键，一般是主键 升序排列
- * @param  array  $list  过渡用的中间数组，
+ * @param  array $list 过渡用的中间数组，
  * @return array        返回排过序的列表数组
  * @author yangweijie <yangweijiester@gmail.com>
  */
@@ -219,9 +421,9 @@ function to_under_score($str)
 /**
  * 自动生成新尺寸的图片
  * @param string $filename 文件名
- * @param int $width  新图片宽度
+ * @param int $width 新图片宽度
  * @param int $height 新图片高度(如果没有填写高度，把高度等比例缩小)
- * @param int $type   缩略图裁剪类型
+ * @param int $type 缩略图裁剪类型
  *                    1 => 等比例缩放类型
  *                    2 => 缩放后填充类型
  *                    3 => 居中裁剪类型
@@ -251,7 +453,7 @@ function resize($filename, $width, $height = null, $type = 1)
     $extension = pathinfo($filename, PATHINFO_EXTENSION);
     $old_image = $filename;
     $new_image = mb_substr($filename, 0, mb_strrpos($filename, '.')) . '_' . $width . 'x' . $height . '.' . $extension;
-    $new_image = str_replace('uploads', 'cache', $new_image); // 缩略图存放于cache文件夹
+    $new_image = str_replace('image', 'cache', $new_image); // 缩略图存放于cache文件夹
     if (!is_file(ROOT_PATH . $new_image) || filectime(ROOT_PATH . $old_image) > filectime(ROOT_PATH . $new_image)) {
         $path        = '';
         $directories = explode('/', dirname(str_replace('../', '', $new_image)));
@@ -302,24 +504,55 @@ function resize($filename, $width, $height = null, $type = 1)
 }
 
 /**
+ * hashids加密函数
+ * @param $id
+ * @param string $salt
+ * @param int $min_hash_length
+ * @return bool|string
+ * @throws Exception
+ */
+function hashids_encode($id, $salt = '', $min_hash_length = 6)
+{
+    return (new Hashids\Hashids($salt, $min_hash_length))->encode($id);
+}
+
+/**
+ * hashids解密函数
+ * @param $id
+ * @param string $salt
+ * @param int $min_hash_length
+ * @return null
+ * @throws Exception
+ */
+function hashids_decode($id, $salt = '', $min_hash_length = 6)
+{
+    $id = (new Hashids\Hashids($salt, $min_hash_length))->decode($id);
+    if (empty($id)) {
+        return null;
+    }
+    return $id['0'];
+}
+
+/**
  * 保存后台用户行为
  * @param string $remark 日志备注
  */
 function insert_admin_log($remark)
 {
-    $admin = session('admin_auth');
-    Db::name('admin_log')->insert([
-        'admin_id'  => $admin['admin_id'],
-        'username'  => $admin['username'],
-        'useragent' => request()->server('HTTP_USER_AGENT'),
-        'ip'        => request()->ip(),
-        'url'       => request()->url(true),
-        'method'    => request()->method(),
-        'type'      => request()->type(),
-        'param'     => json_encode(request()->param()),
-        'remark'    => $remark,
-        'add_time'  => time(),
-    ]);
+    if (session('?admin_auth')) {
+        db('adminLog')->insert([
+            'admin_id'    => session('admin_auth.admin_id'),
+            'username'    => session('admin_auth.username'),
+            'useragent'   => request()->server('HTTP_USER_AGENT'),
+            'ip'          => request()->ip(),
+            'url'         => request()->url(true),
+            'method'      => request()->method(),
+            'type'        => request()->type(),
+            'param'       => json_encode(request()->param()),
+            'remark'      => $remark,
+            'create_time' => time(),
+        ]);
+    }
 }
 
 /**
@@ -328,19 +561,20 @@ function insert_admin_log($remark)
  */
 function insert_user_log($remark)
 {
-    $user = session('user_auth');
-    Db::name('user_log')->insert([
-        'user_id'   => $user['user_id'],
-        'username'  => $user['username'],
-        'useragent' => request()->server('HTTP_USER_AGENT'),
-        'ip'        => request()->ip(),
-        'url'       => request()->url(true),
-        'method'    => request()->method(),
-        'type'      => request()->type(),
-        'param'     => json_encode(request()->param()),
-        'remark'    => $remark,
-        'add_time'  => time(),
-    ]);
+    if (session('?user_auth')) {
+        db('userLog')->insert([
+            'user_id'     => session('user_auth.user_id'),
+            'username'    => session('user_auth.username'),
+            'useragent'   => request()->server('HTTP_USER_AGENT'),
+            'ip'          => request()->ip(),
+            'url'         => request()->url(true),
+            'method'      => request()->method(),
+            'type'        => request()->type(),
+            'param'       => json_encode(request()->param()),
+            'remark'      => $remark,
+            'create_time' => time(),
+        ]);
+    }
 }
 
 /**
@@ -380,10 +614,31 @@ function data_auth_sign($data)
 {
     // 数据类型检测
     if (!is_array($data)) {
-        $data = (array) $data;
+        $data = (array)$data;
     }
     ksort($data); // 排序
     $code = http_build_query($data); // url编码并生成query字符串
     $sign = sha1($code); // 生成签名
     return $sign;
+}
+
+/**
+ * 清除系统缓存
+ */
+function clear_cache($directory = null)
+{
+    $directory = empty($directory) ? ROOT_PATH . 'runtime/cache/' : $directory;
+    if (is_dir($directory) == false) {
+        return false;
+    }
+    $handle = opendir($directory);
+    while (($file = readdir($handle)) !== false) {
+        if ($file != "." && $file != "..") {
+            is_dir($directory . '/' . $file) ? clear_cache($directory . '/' . $file) : unlink($directory . '/' . $file);
+        }
+    }
+    if (readdir($handle) == false) {
+        closedir($handle);
+        rmdir($directory);
+    }
 }

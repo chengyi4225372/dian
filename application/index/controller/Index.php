@@ -8,6 +8,6 @@ class Index extends IndexBase
 {
     public function index()
     {
-        return $this->fetch();
+        return $this->fetch('index');
     }
 }

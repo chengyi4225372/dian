@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'tp5er\\' => array($vendorDir . '/tp5er/tp5-databackup/src'),
+    'think\\oracle\\' => array($vendorDir . '/topthink/think-oracle/src'),
     'think\\mongo\\' => array($vendorDir . '/topthink/think-mongo/src'),
     'think\\migration\\' => array($vendorDir . '/topthink/think-migration/src'),
     'think\\helper\\' => array($vendorDir . '/topthink/think-helper/src'),
@@ -14,4 +16,6 @@ return array(
     'think\\' => array($baseDir . '/thinkphp/library/think', $vendorDir . '/topthink/think-image/src', $vendorDir . '/topthink/think-queue/src'),
     'app\\' => array($baseDir . '/application'),
     'Phinx\\' => array($vendorDir . '/topthink/think-migration/phinx/src/Phinx'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
+    'Hashids\\' => array($vendorDir . '/hashids/hashids/lib/Hashids'),
 );
