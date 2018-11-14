@@ -37,7 +37,7 @@ CREATE TABLE `ob_admin` (
 -- -----------------------------
 -- Records of `ob_admin`
 -- -----------------------------
-INSERT INTO `ob_admin` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '1541587757', '127.0.0.1', '11', '0', '1541587757');
+INSERT INTO `ob_admin` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '1542186820', '127.0.0.1', '12', '0', '1542186820');
 INSERT INTO `ob_admin` VALUES ('2', 'demo', 'e10adc3949ba59abbe56e057f20f883e', '1', '1539076116', '127.0.0.1', '1', '1539076102', '1539076116');
 
 -- -----------------------------
@@ -57,12 +57,14 @@ CREATE TABLE `ob_admin_log` (
   `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '日志备注',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员日志';
 
 -- -----------------------------
 -- Records of `ob_admin_log`
 -- -----------------------------
-INSERT INTO `ob_admin_log` VALUES ('1', '1', 'admin', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '127.0.0.1', 'http://www.openbms.com/admin/database/del/time/1541838807.html', 'POST', 'json', '{\"time\":\"1541838807\"}', '删除了数据', '1541840918');
+INSERT INTO `ob_admin_log` VALUES ('1', '1', 'admin', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36', '127.0.0.1', 'http://www.openbms.com/admin/auth/editgroup/id/1.html', 'POST', 'json', '{\"name\":\"\\u8d85\\u7ea7\\u7ba1\\u7406\\u5458\",\"description\":\"\",\"rules\":\"6,44,43,1,8,34,35,36,7,2,9,28,29,30,10,54,3,11,25,26,27,46,4,12,14,13,45,55,5,16,17,15,18\",\"id\":\"1\"}', '修改了用户组', '1541840962');
+INSERT INTO `ob_admin_log` VALUES ('2', '1', 'admin', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36', '127.0.0.1', 'http://www.openbms.com/admin.html', 'POST', 'json', '{\"username\":\"admin\",\"password\":\"123456\",\"captcha\":\"wnhr\"}', '登录了后台系统', '1542186820');
+INSERT INTO `ob_admin_log` VALUES ('3', '1', 'admin', 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko', '127.0.0.1', 'http://www.openbms.com/admin/database/del/time/1541840920.html', 'POST', 'json', '{\"time\":\"1541840920\"}', '删除了数据', '1542186827');
 
 -- -----------------------------
 -- Table structure for `ob_article`
@@ -125,7 +127,7 @@ CREATE TABLE `ob_auth_group` (
 -- -----------------------------
 -- Records of `ob_auth_group`
 -- -----------------------------
-INSERT INTO `ob_auth_group` VALUES ('1', '超级管理员', '', '1', '6,44,43,1,8,34,35,36,7,31,32,33,2,9,28,29,30,10,54,3,11,25,26,27,46,4,12,14,13,45,55,5,16,17,15,18');
+INSERT INTO `ob_auth_group` VALUES ('1', '超级管理员', '', '1', '6,44,43,1,8,34,35,36,7,2,9,28,29,30,10,54,3,11,25,26,27,46,4,12,14,13,45,55,5,16,17,15,18');
 
 -- -----------------------------
 -- Table structure for `ob_auth_group_access`
@@ -183,9 +185,9 @@ INSERT INTO `ob_auth_rule` VALUES ('18', '5', '管理员日志', 'admin/admin/lo
 INSERT INTO `ob_auth_rule` VALUES ('19', '14', '添加', 'admin/config/add', '', '0', 'auth', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('20', '14', '编辑', 'admin/config/edit', '', '0', 'auth', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('21', '14', '删除', 'admin/config/del', '', '0', 'auth', '0', '1');
-INSERT INTO `ob_auth_rule` VALUES ('22', '15', '添加', 'admin/auth/add_rule', '', '0', 'auth', '0', '1');
-INSERT INTO `ob_auth_rule` VALUES ('23', '15', '编辑', 'admin/auth/edit_rule', '', '0', 'auth', '0', '1');
-INSERT INTO `ob_auth_rule` VALUES ('24', '15', '删除', 'admin/auth/del_rule', '', '0', 'auth', '0', '1');
+INSERT INTO `ob_auth_rule` VALUES ('22', '15', '添加', 'admin/auth/addRule', '', '0', 'auth', '0', '1');
+INSERT INTO `ob_auth_rule` VALUES ('23', '15', '编辑', 'admin/auth/editRule', '', '0', 'auth', '0', '1');
+INSERT INTO `ob_auth_rule` VALUES ('24', '15', '删除', 'admin/auth/delRule', '', '0', 'auth', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('25', '11', '添加', 'admin/ad/add', '', '0', 'auth', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('26', '11', '编辑', 'admin/ad/edit', '', '0', 'auth', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('27', '11', '删除', 'admin/ad/del', '', '0', 'auth', '0', '1');
