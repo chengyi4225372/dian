@@ -33,7 +33,6 @@
                 <th>配置标题</th>
                 <th>配置标识</th>
                 <th>配置类型</th>
-                <th>配置默认值</th>
                 <th>调用方式</th>
                 <th>排序</th>
                 <th>状态</th>
@@ -48,7 +47,6 @@
                 <td>{$v.title}</td>
                 <td>{$v.name}</td>
                 <td>{:config('configType')[$v.type]}[{$v.type}]</td>
-                <td>{$v.value}</td>
                 <td>config('{$v.group}.{$v.name}')</td>
                 <td>
                     <input type="text" name="sort_order" value="{$v.sort_order}" autocomplete="off" class="layui-input ajax-update" data-url="{:url('admin/config/edit', ['id' => $v.id])}">
