@@ -92,7 +92,7 @@ class Auth extends AdminBase
                 $this->error($this->errorMsg);
             }
         }
-        $data     = model('authGroup')::get(input('id'));
+        $data     = model('authGroup')->where('id', input('id'))->find();
         $authRule = collection(model('authRule')->where(['status' => 1])->order('sort_order asc')->select())->toArray();
         foreach ($authRule as $k => $v) {
             // $authRule[$k]['open'] = true;
@@ -145,7 +145,7 @@ class Auth extends AdminBase
                 $this->error($this->errorMsg);
             }
         }
-        return $this->fetch('saveRule', ['data' => model('authRule')::get(input('id'))]);
+        return $this->fetch('saveRule', ['data' => model('authRule')->where('id', input('id'))->find()]);
     }
 
     public function delRule()

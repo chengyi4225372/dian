@@ -71,7 +71,7 @@ class Article extends AdminBase
                 $this->error($this->errorMsg);
             }
         }
-        return $this->fetch('save', ['data' => model('article')::get(input('id'))]);
+        return $this->fetch('save', ['data' => model('article')->get(input('id'))]);
     }
 
     public function del()

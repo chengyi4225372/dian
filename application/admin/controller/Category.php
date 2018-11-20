@@ -40,7 +40,7 @@ class Category extends AdminBase
             }
         }
         return $this->fetch('save', [
-            'data'     => model('category')::get(input('id')),
+            'data'     => model('category')->where('id', input('id'))->find(),
             'category' => list_to_level(model('category')->order('sort_order asc')->select()),
         ]);
     }

@@ -176,7 +176,7 @@ class Index extends AdminBase
             empty($param['rep_password']) && $this->error('请输入确认密码');
             !check_password($param['new_password'], 6, 16) && $this->error('请输入6-16位的密码');
             $param['new_password'] != $param['rep_password'] && $this->error('两次密码不一致');
-            $admin = model('admin')::get(session('admin_auth.admin_id'));
+            $admin = model('admin')->where('id', session('admin_auth.admin_id'))->find();
             $admin['password'] != md5($param['password']) && $this->error('旧密码错误');
             $data = ['id' => session('admin_auth.admin_id'), 'password' => $param['new_password']];
             if ($this->update('admin', $data, false) === true) {

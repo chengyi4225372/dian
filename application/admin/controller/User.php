@@ -45,7 +45,7 @@ class User extends AdminBase
                 $this->error($this->errorMsg);
             }
         }
-        return $this->fetch('save', ['data' => model('user')::get(input('id'))]);
+        return $this->fetch('save', ['data' => model('user')->where('id', input('id'))->find()]);
     }
 
     public function del()

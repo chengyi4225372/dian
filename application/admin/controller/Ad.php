@@ -56,7 +56,7 @@ class Ad extends AdminBase
                 $this->error($this->errorMsg);
             }
         }
-        return $this->fetch('save', ['data' => model('ad')::get(input('id'))]);
+        return $this->fetch('save', ['data' => model('ad')->where('id', input('id'))->find()]);
     }
 
     public function del()

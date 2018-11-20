@@ -51,7 +51,7 @@ class Config extends AdminBase
                 $this->error($this->errorMsg);
             }
         }
-        return $this->fetch('save', ['data' => model('config')::get(input('id'))]);
+        return $this->fetch('save', ['data' => model('config')->where('id', input('id'))->find()]);
     }
 
     public function del()
@@ -123,7 +123,7 @@ class Config extends AdminBase
             insert_admin_log('修改了上传设置');
             $this->success('保存成功');
         }
-        $data = model('system')::get(['name' => 'upload_image']);
+        $data = model('system')->where('name', 'upload_image')->find();
         return $this->fetch('upload', ['data' => unserialize($data['value'])]);
     }
 
@@ -135,7 +135,7 @@ class Config extends AdminBase
             insert_admin_log('修改了邮件设置');
             $this->success('保存成功');
         }
-        $data = model('system')::get(['name' => 'email_server']);
+        $data = model('system')->where('name', 'email_server')->find();
         return $this->fetch('email', ['data' => unserialize($data['value'])]);
     }
 
