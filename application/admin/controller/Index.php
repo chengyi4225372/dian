@@ -7,7 +7,7 @@ use app\common\controller\AdminBase;
 class Index extends AdminBase
 {
     protected $noLogin = ['login', 'captcha'];
-    protected $noAuth = ['index', 'upload', 'icon', 'logout'];
+    protected $noAuth = ['index', 'uploadImage', 'uploadFile', 'uploadVideo', 'icon', 'logout'];
 
     protected function _initialize()
     {

@@ -358,7 +358,7 @@ upload.render({
 // 通用相册
 upload.render({
     elem: '.ajax-photos',
-    url: '/admin/index/upload',
+    url: '/admin/index/uploadImage',
     multiple: true,
     done: function (result) {
         // 上传完毕回调

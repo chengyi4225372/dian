@@ -10,7 +10,7 @@ class AdminBase extends Base
     protected function _initialize()
     {
         parent::_initialize();
-        !$this->checkLogin() && exception('404 not found');
+        !$this->checkLogin() && $this->redirect('admin/index/login');
         !$this->checkAuth() && $this->error('没有权限，请联系管理员');
         if ($this->request->isGet()) {
             $this->assign('navbar', list_to_tree($this->getNavbar()));
