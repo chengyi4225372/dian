@@ -1,4 +1,4 @@
-{extend name="public:base" /}
+{extend name="base" /}
 {block name="body"}
 <div class="layui-card">
     <div class="layui-card-header">
@@ -44,7 +44,7 @@
                     <td>{$category[$v.category]}[{$v.category}]</td>
                     <td>
                         {if empty($v['image'])}
-                        <img src="__ADMIN__/images/no_image_50x50.jpg"/>
+                        <img src="__IMG__/no_image_50x50.jpg"/>
                         {else/}
                         <img src="{$v.image|resize=50,50}"/>
                         {/if}

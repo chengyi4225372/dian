@@ -35,7 +35,7 @@ class AdminBase extends Base
         if (session('admin_auth.username') != config('administrator') &&
             !in_array($this->request->action(), $this->noLogin) &&
             !in_array($this->request->action(), $this->noAuth) &&
-            !(new Auth())->check($this->request->module() . '/'
+            !(new \core\Auth())->check($this->request->module() . '/'
                 . to_under_score($this->request->controller()) . '/'
                 . $this->request->action(), session('admin_auth.admin_id'))) {
             return false;

@@ -1,4 +1,4 @@
-{extend name="public:base" /}
+{extend name="base" /}
 {block name="body"}
 <div class="layui-card">
     <div class="layui-card-body">
@@ -24,13 +24,13 @@
                                 {/if}
                                 {if $config.type eq 'select'}
                                 <select name="{$config.id|hashids_encode}">
-                                    {foreach name="config.options" key="i" item="j"}
+                                    {foreach name=":parse_attr($config.options)" key="i" item="j"}
                                     <option value="{$i}" {if condition="$config.value eq $i"}selected="selected"{/if}>{$j}</option>
                                     {/foreach}
                                 </select>
                                 {/if}
                                 {if $config.type eq 'radio'}
-                                {foreach name="config.options" key="i" item="j"}
+                                {foreach name=":parse_attr($config.options)" key="i" item="j"}
                                 <input type="radio" name="{$config.id|hashids_encode}" value="{$i}" title="{$j}" {if condition="$config.value eq $i"}checked="checked"{/if}>
                                 {/foreach}
                                 {/if}

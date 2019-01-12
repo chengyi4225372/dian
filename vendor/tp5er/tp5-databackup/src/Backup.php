@@ -73,7 +73,7 @@ class Backup
     /**
      * 设置数据库连接必备参数
      * @param array  $dbconfig   数据库连接配置信息
-     * @return object 
+     * @return object
      */
     public function setDbConn($dbconfig = [])
     {
@@ -88,7 +88,7 @@ class Backup
     /**
      * 设置备份文件名
      * @param Array  $file  文件名字
-     * @return object 
+     * @return object
      */
     public function setFile($file = null)
     {
@@ -342,7 +342,7 @@ class Backup
     /**
      * 优化表
      * @param  String $tables 表名
-     * @return String $tables  
+     * @return String $tables
      */
     public function optimize($tables = null)
     {
@@ -366,7 +366,7 @@ class Backup
     /**
      * 修复表
      * @param  String $tables 表名
-     * @return String $tables  
+     * @return String $tables
      */
     public function repair($tables = null)
     {

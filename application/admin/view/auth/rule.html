@@ -1,6 +1,6 @@
-{extend name="public:base" /}
+{extend name="base" /}
 {block name="css"}
-<link rel="stylesheet" href="__ADMIN__/ztree/css/zTreeStyle/zTreeStyle.css">
+<link rel="stylesheet" href="__LIBS__/ztree/css/zTreeStyle/zTreeStyle.css">
 {/block}
 {block name="body"}
 <div class="layui-card">
@@ -15,7 +15,7 @@
 </div>
 {/block}
 {block name="js"}
-<script src="__ADMIN__/ztree/js/jquery.ztree.all.min.js"></script>
+<script src="__LIBS__/ztree/js/jquery.ztree.all.min.js"></script>
 <script>
 $.fn.zTree.init($("#authRule"), {
     view: {

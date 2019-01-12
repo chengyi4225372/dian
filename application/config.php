@@ -142,8 +142,12 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'      => [
-        '__ADMIN__'  => '/public/admin',
-        '__INDEX__'  => '/public/index',
+        '__STATIC__' => '/static',
+        '__ADDONS__' => '/static/addons',
+        '__CSS__'    => '/static/css',
+        '__IMG__'    => '/static/img',
+        '__JS__'     => '/static/js',
+        '__LIBS__'   => '/static/libs',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl' => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -171,13 +175,13 @@ return [
 
     'log'   => [
         // 日志记录方式，内置 file socket 支持扩展
-        'type'  => 'File',
+        'type'      => 'File',
         // 日志保存目录
-        'path'  => LOG_PATH,
+        'path'      => LOG_PATH,
         // 日志记录级别
-        'level' => [],
+        'level'     => [],
         // 日志保存个数
-        'max_files' => 30
+        'max_files' => 30,
     ],
 
     // +----------------------------------------------------------------------

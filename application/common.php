@@ -14,27 +14,6 @@
 // 应用公共文件
 
 /**
- * 发送短信
- * @param string $mobile 手机号码
- * @param string $template 模板ID
- * @param json $content 发送参数
- */
-function send_sms($mobile, $template, $content)
-{
-    $uid = '4160012';
-    $pwd = '95f2da2cd23c352f910d226aebe5e7b2';
-    $url = 'http://api.sms.cn/sms/?ac=send&uid=' . $uid . '&pwd=' . $pwd .
-        '&template=' . $template . '&mobile=' . $mobile . '&content=' . $content;
-    $res = https_request($url);
-    $arr = json_to_array($res);
-    if ($arr['stat'] == '100') {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
  * 发送邮件
  * @param $email
  * @param $title
@@ -56,6 +35,7 @@ function send_email($email, $title, $content, $config = null)
         $mail->Password   = $config['password'];        // SMTP password
         $mail->SMTPSecure = $config['secure'];          // Enable TLS encryption, `ssl` also accepted
         $mail->Port       = $config['port'];            // TCP port to connect to
+        $mail->CharSet    = 'UTF-8';
         //Recipients
         $mail->setFrom($config['username'], $config['fromname']);
         $mail->addAddress($email);                      // Name is optional

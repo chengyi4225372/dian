@@ -1,4 +1,4 @@
-{extend name="public:base" /}
+{extend name="base" /}
 {block name="body"}
 <div class="layui-card">
     <div class="layui-card-header">编辑数据</div>
@@ -43,6 +43,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">文章相册</label>
                 <div class="layui-input-inline" style="width:112px;">
+                    <input type="hidden" name="photo">
                     <button type="button" class="layui-btn layui-btn-primary ajax-photos"><i class="fa fa-file-image-o"></i> 选择图片</button>
                 </div>
                 <div class="layui-form-mid layui-word-aux">允许多文件上传，不支持ie8/9</div>
@@ -87,9 +88,9 @@
 </div>
 {/block}
 {block name="js"}
-<script src="__ADMIN__/ueditor/ueditor.config.js"></script>
-<script src="__ADMIN__/ueditor/ueditor.all.min.js"></script>
-<script src="__ADMIN__/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__LIBS__/ueditor/ueditor.config.js"></script>
+<script src="__LIBS__/ueditor/ueditor.all.min.js"></script>
+<script src="__LIBS__/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script>
     UE.getEditor('editor',{
         // initialFrameWidth :800,// 设置编辑器宽度
