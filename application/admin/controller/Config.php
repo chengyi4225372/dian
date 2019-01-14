@@ -101,7 +101,6 @@ class Config extends AdminBase
             }
             if ($this->saveAll('system', $data) === true) {
                 clear_cache();
-                file_put_contents('../.env', 'is_develop = ' . $this->request->param('is_develop'));
                 insert_admin_log('更新系统设置');
                 $this->success('保存成功');
             } else {

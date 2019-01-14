@@ -44,10 +44,10 @@ class Index extends AdminBase
         is_admin_login() && $this->redirect('admin/index/index'); // 登录直接跳转
         if ($this->request->isPost()) {
             $param = $this->request->param();
-            empty($param['username']) && $this->error('请输入账号');
-            empty($param['password']) && $this->error('请输入密码');
-            empty($param['captcha']) && $this->error('请输入验证码');
-            !captcha_check($param['captcha']) && $this->error('验证码错误');
+            $result = $this->validate($param, 'login');
+            if ($result !== true) {
+                $this->error($result);
+            }
             $admin = model('admin')->where([
                 'username' => $param['username'],
                 'password' => md5($param['password'])
