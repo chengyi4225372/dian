@@ -125,11 +125,12 @@ function https_request($url, $data = null)
 
 /**
  * 格式化字节大小
- * @param  number $size      字节数
+ * @param  number $size 字节数
  * @param  string $delimiter 数字和单位分隔符
  * @return string            格式化后的带单位的大小
  */
-function format_bytes($size, $delimiter = '') {
+function format_bytes($size, $delimiter = '')
+{
     $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
     for ($i = 0; $size >= 1024 && $i < 5; $i++) $size /= 1024;
     return round($size, 2) . $delimiter . $units[$i];
@@ -181,7 +182,8 @@ function check_mobile($mobile)
  * @param string $tel 固定电话
  * @return boolean
  */
-function check_tel($tel) {
+function check_tel($tel)
+{
     $chars = "/^([0-9]{3,4}-)?[0-9]{7,8}$/";
     if (preg_match($chars, $tel)) {
         return true;
@@ -414,12 +416,12 @@ function to_under_score($str)
  */
 function resize($filename, $width, $height = null, $type = 1)
 {
-    if (!is_file(ROOT_PATH . $filename)) {
+    if (!is_file(ROOT_PATH . 'public/' . $filename)) {
         return;
     }
     // 如果没有填写高度，把高度等比例缩小
     if ($height == null) {
-        $info = getimagesize(ROOT_PATH . $filename);
+        $info = getimagesize(ROOT_PATH . 'public/' . $filename);
         if ($width > $info[0]) {
             // 如果缩小后宽度尺寸大于原图尺寸，使用原图尺寸
             $width  = $info[0];
@@ -434,18 +436,18 @@ function resize($filename, $width, $height = null, $type = 1)
     $old_image = $filename;
     $new_image = mb_substr($filename, 0, mb_strrpos($filename, '.')) . '_' . $width . 'x' . $height . '.' . $extension;
     $new_image = str_replace('image', 'cache', $new_image); // 缩略图存放于cache文件夹
-    if (!is_file(ROOT_PATH . $new_image) || filectime(ROOT_PATH . $old_image) > filectime(ROOT_PATH . $new_image)) {
+    if (!is_file(ROOT_PATH . 'public/' . $new_image) || filectime(ROOT_PATH . 'public/' . $old_image) > filectime(ROOT_PATH . 'public/' . $new_image)) {
         $path        = '';
         $directories = explode('/', dirname(str_replace('../', '', $new_image)));
         foreach ($directories as $directory) {
             $path = $path . '/' . $directory;
-            if (!is_dir(ROOT_PATH . $path)) {
-                @mkdir(ROOT_PATH . $path, 0777);
+            if (!is_dir(ROOT_PATH . 'public/' . $path)) {
+                @mkdir(ROOT_PATH . 'public/' . $path, 0777);
             }
         }
-        list($width_orig, $height_orig) = getimagesize(ROOT_PATH . $old_image);
+        list($width_orig, $height_orig) = getimagesize(ROOT_PATH . 'public/' . $old_image);
         if ($width_orig != $width || $height_orig != $height) {
-            $image = \think\Image::open(ROOT_PATH . $old_image);
+            $image = \think\Image::open(ROOT_PATH . 'public/' . $old_image);
             switch ($type) {
                 case 1:
                     $image->thumb($width, $height, \think\Image::THUMB_SCALING);
@@ -475,9 +477,9 @@ function resize($filename, $width, $height = null, $type = 1)
                     $image->thumb($width, $height, \think\Image::THUMB_SCALING);
                     break;
             }
-            $image->save(ROOT_PATH . $new_image);
+            $image->save(ROOT_PATH . 'public/' . $new_image);
         } else {
-            copy(ROOT_PATH . $old_image, ROOT_PATH . $new_image);
+            copy(ROOT_PATH . 'public/' . $old_image, ROOT_PATH . 'public/' . $new_image);
         }
     }
     return $new_image;
@@ -604,6 +606,8 @@ function data_auth_sign($data)
 
 /**
  * 清除系统缓存
+ * @param null $directory
+ * @return bool
  */
 function clear_cache($directory = null)
 {
@@ -614,7 +618,9 @@ function clear_cache($directory = null)
     $handle = opendir($directory);
     while (($file = readdir($handle)) !== false) {
         if ($file != "." && $file != "..") {
-            is_dir($directory . '/' . $file) ? clear_cache($directory . '/' . $file) : unlink($directory . '/' . $file);
+            is_dir($directory . '/' . $file) ?
+                clear_cache($directory . '/' . $file) :
+                unlink($directory . '/' . $file);
         }
     }
     if (readdir($handle) == false) {

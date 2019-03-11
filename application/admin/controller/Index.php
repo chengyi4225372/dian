@@ -6,8 +6,18 @@ use app\common\controller\AdminBase;
 
 class Index extends AdminBase
 {
-    protected $noLogin = ['login', 'captcha'];
-    protected $noAuth = ['index', 'uploadImage', 'uploadFile', 'uploadVideo', 'icon', 'logout'];
+    protected $noLogin = [
+        'login',
+        'captcha'
+    ];
+    protected $noAuth = [
+        'index',
+        'uploadImage',
+        'uploadFile',
+        'uploadVideo',
+        'iconLibs',
+        'logout'
+    ];
 
     protected function _initialize()
     {
@@ -16,14 +26,14 @@ class Index extends AdminBase
 
     public function index()
     {
-        // 快捷导航
+        // 快捷方式
         $where = ['index' => 1, 'status' => 1];
         if (session('admin_auth.username') != config('administrator')) {
             $access      = model('authGroupAccess')->with('authGroup')
                 ->where('uid', session('admin_auth.admin_id'))->find();
             $where['id'] = ['in', $access['rules']];
         }
-        $index = model('authRule')->where($where)->order('pid asc,sort_order asc')->select();
+        $shortcut = model('authRule')->where($where)->order('pid asc,sort_order asc')->select();
         // 服务器信息
         $server = [
             'os'                  => PHP_OS, // 服务器操作系统
@@ -36,14 +46,14 @@ class Index extends AdminBase
             'memory_limit'        => ini_get('memory_limit'), // 允许内存大小
             'date'                => date('Y-m-d H:i:s', time()), // 服务器时间
         ];
-        return $this->fetch('index', ['index' => $index, 'server' => $server]);
+        return $this->fetch('index', ['shortcut' => $shortcut, 'server' => $server]);
     }
 
     public function login()
     {
         is_admin_login() && $this->redirect('admin/index/index'); // 登录直接跳转
         if ($this->request->isPost()) {
-            $param = $this->request->param();
+            $param  = $this->request->param();
             $result = $this->validate($param, 'login');
             if ($result !== true) {
                 $this->error($result);
@@ -121,7 +131,7 @@ class Index extends AdminBase
                     }
                     $object_image->save($info->getPathName());
                 }
-                return ['code' => 1, 'url' => '/public/upload/image/' . str_replace('\\', '/', $info->getSaveName())];
+                return ['code' => 1, 'url' => '/upload/image/' . str_replace('\\', '/', $info->getSaveName())];
             } else {
                 return ['code' => 0, 'msg' => $file->getError()];
             }
@@ -136,7 +146,7 @@ class Index extends AdminBase
             $file = $this->request->file('file');
             $info = $file->move(ROOT_PATH . 'public' . DS . 'upload' . DS . 'file');
             if ($info) {
-                return ['code' => 1, 'url' => '/public/upload/file/' . str_replace('\\', '/', $info->getSaveName())];
+                return ['code' => 1, 'url' => '/upload/file/' . str_replace('\\', '/', $info->getSaveName())];
             } else {
                 return ['code' => 0, 'msg' => $file->getError()];
             }
@@ -151,7 +161,7 @@ class Index extends AdminBase
             $file = $this->request->file('file');
             $info = $file->move(ROOT_PATH . 'public' . DS . 'upload' . DS . 'video');
             if ($info) {
-                return ['code' => 1, 'url' => '/public/upload/video/' . str_replace('\\', '/', $info->getSaveName())];
+                return ['code' => 1, 'url' => '/upload/video/' . str_replace('\\', '/', $info->getSaveName())];
             } else {
                 return ['code' => 0, 'msg' => $file->getError()];
             }
@@ -160,9 +170,9 @@ class Index extends AdminBase
         }
     }
 
-    public function icon()
+    public function iconLibs()
     {
-        return $this->fetch();
+        return $this->fetch('iconLibs');
     }
 
     // 修改密码

@@ -1,13 +1,13 @@
 {extend name="base" /}
 {block name="body"}
 <div class="layui-row layui-col-space15">
-    {if !empty($index)}
+    {if !empty($shortcut)}
     <div class="layui-col-md12">
         <div class="layui-card">
             <div class="layui-card-header">快捷方式</div>
             <div class="layui-card-body">
-                <div class="index-nav layui-clear">
-                    {foreach name="index" item="v"}
+                <div class="shortcut layui-clear">
+                    {foreach name="shortcut" item="v"}
                     <a href="{$Request.root.true}/{$v.url}"><i class="{$v.icon}"></i> {$v.name}</a>
                     {/foreach}
                 </div>

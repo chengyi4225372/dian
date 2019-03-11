@@ -8,7 +8,6 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
 {
     public static $files = array (
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
-        '2cd73290f8e6fac63cdf82efabea125f' => __DIR__ . '/..' . '/5ini99/think-addons/src/common.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
         'ddc3cd2a04224f9638c5d0de6a69c7e3' => __DIR__ . '/..' . '/topthink/think-migration/src/config.php',
         'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
@@ -17,7 +16,6 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
-            'tp5er\\' => 6,
             'think\\oracle\\' => 13,
             'think\\mongo\\' => 12,
             'think\\migration\\' => 16,
@@ -42,10 +40,6 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
     );
 
     public static $prefixDirsPsr4 = array (
-        'tp5er\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/tp5er/tp5-databackup/src',
-        ),
         'think\\oracle\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-oracle/src',
@@ -72,10 +66,9 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
         ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/5ini99/think-addons/src',
-            1 => __DIR__ . '/../..' . '/thinkphp/library/think',
-            2 => __DIR__ . '/..' . '/topthink/think-image/src',
-            3 => __DIR__ . '/..' . '/topthink/think-queue/src',
+            0 => __DIR__ . '/../..' . '/thinkphp/library/think',
+            1 => __DIR__ . '/..' . '/topthink/think-image/src',
+            2 => __DIR__ . '/..' . '/topthink/think-queue/src',
         ),
         'app\\' => 
         array (
@@ -98,10 +91,6 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
     public static $prefixesPsr0 = array (
         'P' => 
         array (
-            'PHPQRCode' => 
-            array (
-                0 => __DIR__ . '/..' . '/aferrandini/phpqrcode/lib',
-            ),
             'PHPExcel' => 
             array (
                 0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',

@@ -3,7 +3,6 @@
 namespace app\admin\controller;
 
 use app\common\controller\AdminBase;
-use tp5er\Backup;
 
 class Database extends AdminBase
 {
@@ -12,7 +11,7 @@ class Database extends AdminBase
     protected function _initialize()
     {
         parent::_initialize();
-        $this->backup = new Backup([
+        $this->backup = new \core\Backup([
             'path'     => './data/',// 数据库备份路径
             'part'     => 20971520, // 数据库备份卷大小
             'compress' => 0,        // 数据库备份文件是否启用压缩 0不压缩 1 压缩
