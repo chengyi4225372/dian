@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Sorry...页面没有找到</title>
-    <link rel="stylesheet" href="__LIBS__/layui/css/layui.css">
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css">
     <style>
         body{
             background-color: #f2f2f2;

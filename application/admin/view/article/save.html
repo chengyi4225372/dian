@@ -62,7 +62,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">详情内容</label>
                 <div class="layui-input-block">
-                    <textarea name="content" placeholder="请输入详情内容" id="editor" style="width: 100%;height:400px;">{$data.content|default=''}</textarea>
+                    <textarea name="content" placeholder="请输入详情内容" id="content" style="width: 100%;height:400px;">{$data.content|default=''}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -88,7 +88,5 @@
 </div>
 {/block}
 {block name="js"}
-{if config('default_editor') eq 'ueditor'}{editor:ueditor id="editor" /}{/if}
-{if config('default_editor') eq 'umeditor'}{editor:umeditor id="editor" /}{/if}
-{if config('default_editor') eq 'kindeditor'}{editor:kindeditor id="editor" /}{/if}
+{:hook('editor', ['id' => 'content', 'type' => config('default_editor')])}
 {/block}

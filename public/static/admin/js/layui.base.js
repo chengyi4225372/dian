@@ -324,7 +324,7 @@ upload.render({
     done: function (result) {
         // 上传完毕回调
         if (result.code === 1) {
-            this.item.prev('input').val(result.url);
+            this.item.siblings('.layui-input').val(result.url);
         } else {
             layer.msg(result.msg);
         }
@@ -337,7 +337,7 @@ upload.render({
     done: function (result) {
         // 上传完毕回调
         if (result.code === 1) {
-            this.item.prev('input').val(result.url);
+            this.item.siblings('.layui-input').val(result.url);
         } else {
             layer.msg(result.msg);
         }
@@ -350,7 +350,7 @@ upload.render({
     done: function (result) {
         // 上传完毕回调
         if (result.code === 1) {
-            this.item.prev('input').val(result.url);
+            this.item.siblings('.layui-input').val(result.url);
         } else {
             layer.msg(result.msg);
         }

@@ -121,29 +121,27 @@ return [
 
     'template'                => [
         // 模板引擎类型 支持 php think 支持扩展
-        'type'            => 'Think',
+        'type'         => 'Think',
         // 模板路径
-        'view_path'       => '',
+        'view_path'    => '',
         // 模板后缀
-        'view_suffix'     => 'html',
+        'view_suffix'  => 'html',
         // 模板文件名分隔符
-        'view_depr'       => DS,
+        'view_depr'    => DS,
         // 模板引擎普通标签开始标记
-        'tpl_begin'       => '{',
+        'tpl_begin'    => '{',
         // 模板引擎普通标签结束标记
-        'tpl_end'         => '}',
+        'tpl_end'      => '}',
         // 标签库标签开始标记
-        'taglib_begin'    => '{',
+        'taglib_begin' => '{',
         // 标签库标签结束标记
-        'taglib_end'      => '}',
-        // 需要额外加载的标签库(须指定标签库名称)，多个以逗号分隔
-        'taglib_pre_load' => 'app\common\taglib\Editor',
+        'taglib_end'   => '}',
     ],
 
     // 视图输出字符串内容替换
     'view_replace_str'        => [
         '__STATIC__' => '/static',
-        '__LIBS__'   => '/static/libs',
+        '__ADDONS__' => '/static/addons',
         '__ADMIN__'  => '/static/admin',
         '__INDEX__'  => '/static/index',
     ],
