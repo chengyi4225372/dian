@@ -140,11 +140,11 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'        => [
-        '__STATIC__' => '/static',
-        '__ADDONS__' => '/static/addons',
-        '__ADMIN__'  => '/static/admin',
-        '__INDEX__'  => '/static/index',
-        '__HOME__'  => '/static/home',
+        '__STATIC__' => '/public/static',
+        '__ADDONS__' => '/public/static/addons',
+        '__ADMIN__'  => '/public/static/admin',
+        '__INDEX__'  => '/public/static/index',
+        '__HOME__'  => '/public/static/home',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'   => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
