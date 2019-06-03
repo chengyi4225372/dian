@@ -8,19 +8,19 @@
 namespace  Index\Controller;
 
 use Think\Controller;
-use Index\Controller\BaseController;
-class PagesController extends  BaseController
+use app\common\controller\IndexBase;
+class Pages extends  IndexBase
 {
      //about-us
     public  function index(){
-        $this->display();
+      return $this->fetch();
     }
 
     public function terms(){
-        $this->display();
+        return $this->fetch();
     }
 
     public function privacy(){
-        $this->display();
+        return $this->fetch();
     }
 }

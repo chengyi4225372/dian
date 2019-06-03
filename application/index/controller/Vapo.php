@@ -5,21 +5,19 @@
  * Date: 2019/5/13
  * Time: 11:22
  */
-namespace  Index\Controller;
+namespace app\index\controller;
 
-use Think\Controller;
-use Index\Controller\BaseController;
+use app\common\controller\IndexBase;
 
-class VapoController extends  BaseController
-{
+class Vapo extends IndexBase{
     //voporizer
     public  function index(){
-        $this->display();
+         return $this->fetch();
     }
 
 
     public function detail(){
-        $this->display();
+       return  $this->fetch();
     }
 
 }

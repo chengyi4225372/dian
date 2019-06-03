@@ -6,15 +6,15 @@
  * Time: 12:00
  */
 
-namespace  Index\Controller;
+namespace app\index\controller;
 
 use Think\Controller;
-use Index\Controller\BaseController;
+use app\common\controller\IndexBase;
 
-class PackController extends  BaseController
+class Pack extends  IndexBase
 {
     //packaging
     public function index(){
-        $this->display();
+        return $this->fetch();
     }
 }

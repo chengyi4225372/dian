@@ -6,15 +6,15 @@
  * Time: 12:02
  */
 
-namespace  Index\Controller;
+namespace app\index\controller;
 
 use Think\Controller;
-use Index\Controller\BaseController;
+use app\common\controller\IndexBase;
 
-class AccController extends  BaseController
+class Acc extends  IndexBase
 {
     //accessories
     public function index(){
-        $this->display();
+       return  $this->fetch('index');
     }
 }

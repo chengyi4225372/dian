@@ -6,15 +6,15 @@
  * Time: 11:58
  */
 
-namespace  Index\Controller;
+namespace app\index\controller;
 
 use Think\Controller;
-use Index\Controller\BaseController;
 
-class TerController extends  BaseController
+use app\common\controller\IndexBase;
+class Ter extends  IndexBase
 {
     //terpenes
     public  function index(){
-        $this->display();
+      return $this->fetch();
     }
 }

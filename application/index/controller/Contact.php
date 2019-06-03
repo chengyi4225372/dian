@@ -5,16 +5,16 @@
  * Date: 2019/5/13
  * Time: 12:03
  */
-namespace  Index\Controller;
+namespace app\index\controller;
 
 use Think\Controller;
-use Index\Controller\BaseController;
+use app\common\controller\IndexBase;
 
-class ContactController extends  BaseController
+class Contact  extends  IndexBase
 {
     //contact
     public function index(){
-        $this->display();
+        return $this->fetch();
     }
 
 
