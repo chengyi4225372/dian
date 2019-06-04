@@ -8,8 +8,6 @@
 
 namespace app\index\controller;
 
-use Think\Controller;
-
 use app\common\controller\IndexBase;
 class Ter extends  IndexBase
 {
