@@ -1,0 +1,93 @@
+{extend name="base" /}
+{block name="body"}
+<div class="layui-card">
+    <div class="layui-card-header">编辑数据</div>
+    <div class="layui-card-body">
+        <form action="{:request()->url()}" class="layui-form" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章预览图</label>
+                <!--
+                <div class="layui-input-block">
+                    <input type="text" name="image" value="{$data.image|default=''}" autocomplete="off" placeholder="请上传文章封面" class="layui-input">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-position ajax-images"><i class="fa fa-file-image-o"></i> 选择图片</button>
+                </div>
+                -->
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                    <div class="layui-upload-list">
+                        <img class="layui-upload-img" id="demo1">
+                        <input type="hidden" name="image" value="{$data.image|default=''}" id="images" class="layui-input">
+                        <p id="demoText"></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">* 文章标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" value="" autocomplete="off" placeholder="请输入文章标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章简介</label>
+                <div class="layui-input-block">
+                    <textarea name="summary" placeholder="请输入文章简介" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">详情内容</label>
+                <div class="layui-input-block">
+                    <textarea name="content" placeholder="请输入详情内容" id="content" style="width: 100%;height:400px;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-filter="*" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{:hook('editor', ['id' => 'content', 'type' => config('default_editor')])}
+
+
+<script>
+    layui.use('upload', function() {
+        var $ = layui.jquery, upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url:"{:url('admin/index/uploadImage')}"
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                // //上传成功
+                if (res.code > 0) {
+                    $("#images").val(res.url);
+                    return layer.msg('上传成功！');
+                }else{
+                    return layer.msg('上传失败！');
+                }
+
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+    </script>
+
+{/block}
