@@ -7,15 +7,14 @@
  */
 namespace app\index\controller;
 
-use Think\Controller;
 use app\common\controller\IndexBase;
 class Blog extends  IndexBase
 {
     public function index(){
-        $this->display();
+      return $this->fetch();
     }
 
     public function detail(){
-        $this->display();
+      return $this->fetch();
     }
 }
