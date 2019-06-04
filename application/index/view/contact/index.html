@@ -1,4 +1,4 @@
-<include file="public/header" />
+{include file="public/header" /}
 
 <body class=" deco-frame- deco-effect-  templatePage dropdown-menu-type-4 no-box-type-7 sale-new-type-2 footer-type-4 body-white body-header-type-7 show-vertical-megamenu-category-page flex-view-4 collection-template- menu-noborder"><div id="global__symbols" style="display: none;">
     <svg xmlns="http://www.w3.org/2000/svg">
@@ -83,8 +83,10 @@
 
 </div>
 <div id="cart_popup" class="mfp-hide cart_popup_wrapper"></div>
-<div id="cart_error_popup" class="mfp-hide cart_popup_wrapper alert-info"></div><div class="standard-body">
-    <div id="main" class=""><div id="shopify-section-mobile-nav" class="shopify-section header-mobile-section"><style></style>
+<div id="cart_error_popup" class="mfp-hide cart_popup_wrapper alert-info"></div>
+<div class="standard-body">
+    <div id="main" class="">
+        <div id="shopify-section-mobile-nav" class="shopify-section header-mobile-section"><style></style>
         <div id="primary-mobile-nav"  data-section-id="mobile-nav" data-section-type="mobile-nav-section">
             <nav class="mobile-nav-wrapper">
                 <ul class="mobile-nav">
@@ -385,7 +387,7 @@
                             </div>
                         </div>
                         <!-- Menu -->
-                        <include file="public/menu" />
+                        {include file="public/menu" /}
                 </div>
             </div>
         </div>
@@ -397,7 +399,9 @@
                 <div class="pattern orderable"></div>
             </div>
         </div>
-    </header><div class="breadcrumb fixed">
+
+    </header>
+        <div class="breadcrumb fixed">
         <div class="background-breadcrumb"></div>
         <div class="background">
             <div class="shadow"></div>
@@ -433,7 +437,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <h2 style="text-align: center;">Please drop us a line, we'd love to hear from you!</h2>
-                                        <form method="post" action="{:U('index/contact/contact_form')}" id="contact_form" accept-charset="UTF-8" class="contact-form">
+                                        <form method="post" action="{:url('/contact/contact_form')}" id="contact_form" accept-charset="UTF-8" class="contact-form">
                                             <input type="hidden" name="form_type" value="contact" />
                                             <fieldset class="form-horizontal">
                                             <h3>Contact Form</h3>
@@ -476,73 +480,114 @@
             </div>
         </div>
     </div>
-        <include file="public/middle" />
-        <include file="public/foot" />
-    <div id="widgets" class="widget_4"><div class="social_widget hide">
-    <div class="icon"><div class="mobile-nav-icon"><button type="button"><span></span></button></div></div>
-</div><div class="social_widget hide">
-    <a id="filter-cart" href="/cart" class="icon"><span class="cart-count"><i class="fa fa-shopping-basket"></i><span class="total_count_ajax">0</span></span></a>
-</div><div class="social_widget hide">
-    <a href="" class="icon"><i class="fa fa-heart"></i></a>
-</div><div class="social_widget facebook right hidden-xs hidden-sm">
-    <div class="icon"><i class="fa fa-facebook"></i></div>
-    <div class="content">
-        <div class="fb-like-box fb_iframe_widget" data-href="https://www.facebook.com/cannarypackaging/" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false" data-show-posts="false"></div>
-        <script>!function(a,b,c){var d,e=a.getElementsByTagName(b)[0];a.getElementById(c)||(d=a.createElement(b),d.id=c,d.src="//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3",e.parentNode.insertBefore(d,e))}(document,"script","facebook-jssdk");</script>
-    </div>
-</div><div class="social_widget twitter right hidden-xs hidden-sm">
-    <div class="icon"><i class="fa fa-twitter"></i></div>
-    <div class="content">
-        <a class="twitter-timeline" href="https://twitter.com/@cannary_can" height="0" data-chrome="noborders" data-theme="light" data-related="twitterapi,twitter" data-aria-polite="assertive">Tweets by @cannary_can</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </div>
-</div><div class="social_widget instagram right hidden-xs hidden-sm">
-    <div class="icon"><i class="fa fa-instagram"></i></div>
-    <div class="content"><div id="instagram_list" class="g_thumbs" data-token="8550961602.1677ed0.ac58ac0eb4af4c1c88d4195ddd18237b" data-uid="8550961602" data-limit="12"></div>
-    </div>
-</div><div class="social_widget totop right">
-    <div id="scroll-top" class="icon"><i class="fa fa-chevron-up"></i></div>
-</div></div></div><div id="off-canvas-layer" class="fastor-off-canvas-layer"></div><script id="cart_success" type="text/x-jquery-tmpl">Success: You have added <a href="${product_url}">${product_name}</a> to your <a href="/cart">shopping cart</a>!</script><script id="wishlist_success" type="text/x-jquery-tmpl">Success: You have added <a href="${product_url}">${product_name}</a> to your <a href="/pages/wishlist">wish list</a>!</script><script id="wishlist_error" type="text/template">You must <a href="/account">login</a> or <a href="/account/register">create an account</a> to save this product to your wish list!</script><div id="pswp" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="pswp__bg"></div>
-    <div class="pswp__scroll-wrap">
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-        <div class="pswp__ui pswp__ui--hidden">
-            <div class="pswp__top-bar">
-                <div class="pswp__counter"></div>
-                <button class="pswp__button pswp__button--close" aria-label="Close (Esc)"></button>
-                <button class="pswp__button pswp__button--share" aria-label="Share"></button>
-                <button class="pswp__button pswp__button--fs" aria-label="Toggle fullscreen"></button>
-                <button class="pswp__button pswp__button--zoom" aria-label="Zoom in/out"></button>
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
+        {include file="public/middle" /}
+        {include file="public/foot" /}
+        <div id="widgets" class="widget_4">
+            <div class="social_widget hide">
+                <div class="icon">
+                    <div class="mobile-nav-icon">
+                        <button type="button"><span></span></button>
                     </div>
                 </div>
             </div>
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
+            <div class="social_widget hide">
+                <a id="filter-cart" href="/cart" class="icon"><span class="cart-count"><i
+                        class="fa fa-shopping-basket"></i><span class="total_count_ajax">0</span></span></a>
             </div>
+            <div class="social_widget hide">
+                <a href="" class="icon"><i class="fa fa-heart"></i></a>
+            </div>
+            <div class="social_widget facebook right hidden-xs hidden-sm">
+                <div class="icon"><i class="fa fa-facebook"></i></div>
+                <div class="content">
+                    <div class="fb-like-box fb_iframe_widget" data-href="https://www.facebook.com/cannarypackaging/"
+                         data-small-header="true" data-adapt-container-width="true" data-hide-cover="false"
+                         data-show-facepile="false" data-show-posts="false"></div>
+                    <script>!function (a, b, c) {
+                        var d, e = a.getElementsByTagName(b)[0];
+                        a.getElementById(c) || (d = a.createElement(b), d.id = c, d.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3", e.parentNode.insertBefore(d, e))
+                    }(document, "script", "facebook-jssdk");</script>
+                </div>
+            </div>
+            <div class="social_widget twitter right hidden-xs hidden-sm">
+                <div class="icon"><i class="fa fa-twitter"></i></div>
+                <div class="content">
+                    <a class="twitter-timeline" href="https://twitter.com/@cannary_can" height="0"
+                       data-chrome="noborders" data-theme="light" data-related="twitterapi,twitter"
+                       data-aria-polite="assertive">Tweets by @cannary_can</a>
+                    <script>!function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "//platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");</script>
+                </div>
+            </div>
+            <div class="social_widget instagram right hidden-xs hidden-sm">
+                <div class="icon"><i class="fa fa-instagram"></i></div>
+                <div class="content">
+                    <div id="instagram_list" class="g_thumbs"
+                         data-token="8550961602.1677ed0.ac58ac0eb4af4c1c88d4195ddd18237b" data-uid="8550961602"
+                         data-limit="12"></div>
+                </div>
+            </div>
+            <div class="social_widget totop right">
+                <div id="scroll-top" class="icon"><i class="fa fa-chevron-up"></i></div>
+            </div>
+        </div>
+    </div>
+    <div id="off-canvas-layer" class="fastor-off-canvas-layer"></div>
+    <script id="cart_success" type="text/x-jquery-tmpl">
+        Success: You have added <a href="${product_url}">${product_name}</a> to your <a href="/cart">shopping cart</a>!
+    </script>
+    <script id="wishlist_success" type="text/x-jquery-tmpl">
+        Success: You have added <a href="${product_url}">${product_name}</a> to your <a href="/pages/wishlist">wish list</a>!
+    </script>
+    <script id="wishlist_error" type="text/template">You must <a href="/account">login</a> or <a href="/account/register">create an account</a> to save this product to your wish list!</script>
+    <div id="pswp" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" aria-label="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" aria-label="Share"></button>
+                    <button class="pswp__button pswp__button--fs" aria-label="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" aria-label="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
 
-            <button class="pswp__button pswp__button--arrow--left" aria-label="Previous (arrow left)"></button>
-            <button class="pswp__button pswp__button--arrow--right" aria-label="Next (arrow right)"></button>
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
+                <button class="pswp__button pswp__button--arrow--left" aria-label="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" aria-label="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
             </div>
 
         </div>
 
     </div>
-
-</div>
-    <script src="//cdn.shopify.com/s/javascripts/currencies.js" defer="defer"></script>
-    <script src="//cdn.shopify.com/s/files/1/0033/8519/6642/t/28/assets/rt.application.js?18330" defer="defer"></script>
-    <script src="//cdn.shopify.com/s/files/1/0033/8519/6642/t/28/assets/theme.js?18330" defer="defer"></script>
+    <script src="__HOME__/js/currencies.js" defer="defer"></script>
+    <script src="__HOME__/js/rt.application.js?18330" defer="defer"></script>
+    <script src="__HOME__/js/theme.js?18330" defer="defer"></script>
     <!-- // FRESHDESK Widget code here for all pages -->
 <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
 <script type="text/javascript">
